@@ -16,6 +16,9 @@
 # production
 /build
 
+#development
+/.vscode
+
 # misc
 .DS_Store
 *.pem
