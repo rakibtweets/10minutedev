@@ -1,7 +1,9 @@
+import HeroBanner from '@/components/HeroSection/HeroBanner';
+
 export default function Home() {
   return (
-    <main className="text-center text-green-500">
-      <h1>Next.js + TypeScript</h1>
+    <main className="max-w-6xl gap-0">
+      <HeroBanner />
     </main>
   );
 }
