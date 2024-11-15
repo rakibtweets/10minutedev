@@ -1,13 +1,54 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
+  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
+import { sidebarLinks } from '@/constants';
 import { AlignJustifyIcon } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+const NavContent = () => {
+  const pathname = usePathname();
+  console.log(pathname);
+
+  return (
+    <section className="flex h-full flex-col gap-1 pt-16">
+      {sidebarLinks?.map((item) => {
+        const isActive =
+          (pathname.includes(item.route) && item.route.length > 1) ||
+          pathname === item.route;
+
+        // TODO
+
+        return (
+          <SheetClose asChild key={item.route}>
+            <Link
+              href={item.route}
+              className={`${
+                isActive ? 'bg-orange-500 text-white rounded-lg' : ''
+              } flex items-center justify-start gap-4 bg-transparent p-4`}
+            >
+              {/* <Image
+                src={item.imgURL}
+                alt={item.label}
+                width={20}
+                height={20}
+                className={`${isActive ? '' : 'invert-colors'}`}
+              /> */}
+              <p className={`${isActive ? '  base-bold' : 'base-medium'}`}>
+                {item.label}
+              </p>
+            </Link>
+          </SheetClose>
+        );
+      })}
+    </section>
+  );
+};
 
 const MobileNav = () => {
   return (
@@ -21,14 +62,12 @@ const MobileNav = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
-        </SheetHeader>
+      <SheetContent className=" border-none overflow-y-auto no-scrollbar">
+        <div className="no-scrollbar flex grow flex-col justify-between overflow-y-auto">
+          <SheetClose asChild>
+            <NavContent />
+          </SheetClose>
+        </div>
       </SheetContent>
     </Sheet>
   );
