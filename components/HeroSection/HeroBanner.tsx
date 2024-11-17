@@ -46,7 +46,9 @@ const HeroBanner = () => {
       >
         An open-source platform to make your development journey easy. Master
         the skills to become a developer with{' '}
-        <span className="font-bold text-black">10minutedev</span> .
+        <p className="inline-block font-bold ">
+          10minute<span className="text-orange-500">Dev</span>
+        </p>
       </PageHeaderDescription>
       <PageActions
         className="animate-fade-up"
