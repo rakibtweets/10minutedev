@@ -1,24 +1,46 @@
 import CourseCard from '@/components/cards/courseCard';
-import HeroBanner from '@/components/HeroSection/HeroBanner';
+import CourseDetailsCard from '@/components/cards/CourseDetailsCard';
+import CourseModuleCard from '@/components/cards/CourseModuleCard';
+import EnrollCourseCard from '@/components/cards/EnrollCourseCard';
 import { Button } from '@/components/ui/button';
 import { courses } from '@/constants';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
-export default function Home() {
+const CourseDetailsPage = () => {
   return (
-    <main className="max-w-6xl gap-0">
-      <HeroBanner />
-
-      {/* Courses Section */}
-      <section className="mt-5">
+    <section className="">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+        <div className="w-full lg:col-span-8">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div>
+              <Image
+                src={'https://placehold.co/600x400'}
+                alt={'Course title'}
+                width={800}
+                height={400}
+                className="rounded-lg lg:rounded-xl"
+              />
+            </div>
+            <div>
+              <CourseDetailsCard />
+            </div>
+          </div>
+        </div>
+        <div className="w-full lg:col-span-4">
+          <div className="flex flex-col gap-4">
+            <EnrollCourseCard />
+            <CourseModuleCard />
+          </div>
+        </div>
+      </div>
+      {/* Related Courses */}
+      <section className="mt-16">
         <div className="flex items-center justify-center gap-4 space-y-9">
           <div className="flex max-w-[61rem] flex-1 flex-col gap-1">
             <h1 className=" text-2xl font-bold leading-[1.1] md:text-3xl">
-              Featured Courses
+              Some more courses for you
             </h1>
-            <p className="max-w-[46.875rem] text-balance text-sm leading-normal text-muted-foreground sm:text-base sm:leading-7">
-              Explore our free courses fron youtube
-            </p>
           </div>
           <div className="hidden sm:flex">
             <Button
@@ -51,6 +73,7 @@ export default function Home() {
           </Button>
         </div>
       </section>
-    </main>
+    </section>
   );
-}
+};
+export default CourseDetailsPage;
