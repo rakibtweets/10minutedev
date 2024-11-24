@@ -5,6 +5,7 @@ import './globals.css';
 import React from 'react';
 import NextTopLoader from 'nextjs-toploader';
 import Providers from '@/components/Providers';
+import { BreakPointIndicator } from '@/components/shared/BreakPointIndicator';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,6 +39,7 @@ export default function RootLayout({
           {children}
           {modal}
         </Providers>
+        <BreakPointIndicator />
       </body>
     </html>
   );
