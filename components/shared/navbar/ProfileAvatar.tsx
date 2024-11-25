@@ -40,7 +40,7 @@ const ProfileAvatar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/stores">
+                <Link href="/dashboard">
                   <LayoutDashboardIcon
                     className="mr-2 size-4"
                     aria-hidden="true"
