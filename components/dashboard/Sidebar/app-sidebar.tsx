@@ -1,8 +1,16 @@
-import { BookOpenText, Home, Settings, UserCheck } from 'lucide-react';
+import {
+  BookOpenText,
+  Home,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  UserCheck
+} from 'lucide-react';
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -18,6 +26,16 @@ const items = [
     title: 'Home',
     url: '/',
     icon: Home
+  },
+  {
+    title: 'Dashboard',
+    url: '/dashboard',
+    icon: LayoutDashboard
+  },
+  {
+    title: 'Dashboard',
+    url: '/my-courses',
+    icon: BookOpenText
   },
   {
     title: 'Profile',
@@ -38,7 +56,7 @@ const items = [
 
 export function DashboardSidebar() {
   return (
-    <Sidebar collapsible="icon" variant="floating">
+    <Sidebar side="left" collapsible="icon" variant="floating">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -58,6 +76,16 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <LogOut className="mr-2 size-4" />
+              Logout
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
