@@ -32,18 +32,14 @@ const items = [
     url: '/dashboard',
     icon: LayoutDashboard
   },
-  {
-    title: 'Dashboard',
-    url: '/my-courses',
-    icon: BookOpenText
-  },
+
   {
     title: 'Profile',
     url: '/profile',
     icon: UserCheck
   },
   {
-    title: 'Emrollment',
+    title: 'Enrollment',
     url: '/enrollment',
     icon: BookOpenText
   },

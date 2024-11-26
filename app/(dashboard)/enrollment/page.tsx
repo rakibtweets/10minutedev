@@ -57,18 +57,20 @@ const EmrollmentPage = () => {
         <TableCaption>A list of your enrolled courses</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Course Name</TableHead>
-            <TableHead>Enrollment Time</TableHead>
             <TableHead>Enrollment ID</TableHead>
+            <TableHead>Course Name</TableHead>
+            <TableHead className="hidden md:block">Enrollment Time</TableHead>
             <TableHead>Certificate</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {enrolledCourses.map((course) => (
             <TableRow key={course.id}>
-              <TableCell className="font-medium">{course.name}</TableCell>
-              <TableCell>{formatDate(course.enrollmentTime)}</TableCell>
               <TableCell>{course.id}</TableCell>
+              <TableCell className="font-medium">{course.name}</TableCell>
+              <TableCell className="hidden md:block">
+                {formatDate(course.enrollmentTime)}
+              </TableCell>
               <TableCell>
                 {course.certificateAvailable ? (
                   <Button variant="outline" size="sm">

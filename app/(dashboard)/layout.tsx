@@ -4,12 +4,12 @@ import { DashboardSidebar } from '@/components/dashboard/Sidebar/app-sidebar';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <SidebarProvider className="flex border-2 border-green-400 py-4">
+    <SidebarProvider>
       <DashboardSidebar />
-      <main>
+      <main className="w-full ">
         <SidebarTrigger />
-        <section className="flex flex-1 flex-col items-center justify-center px-6 pb-6 pt-20 max-md:pb-14 sm:px-14">
-          <div className="mx-auto w-full max-w-7xl">{children}</div>
+        <section className="flex w-full flex-1 flex-col items-center justify-center px-6 pb-6 pt-16 max-md:pb-14 sm:px-14">
+          <div className="mx-auto  w-full max-w-7xl">{children}</div>
         </section>
       </main>
     </SidebarProvider>
