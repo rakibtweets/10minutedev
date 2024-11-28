@@ -15,6 +15,7 @@ import { LayoutDashboardIcon, LogOutIcon, UserCheck } from 'lucide-react';
 
 const ProfileAvatar = () => {
   const user = true;
+  const isAdmin = true;
   return (
     <>
       {user ? (
@@ -48,6 +49,18 @@ const ProfileAvatar = () => {
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
+              {isAdmin && (
+                <DropdownMenuItem asChild>
+                  <Link className="cursor-pointer" href="/admin">
+                    <LayoutDashboardIcon
+                      className="mr-2 size-4"
+                      aria-hidden="true"
+                    />
+                    Admin
+                    <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+              )}
 
               <DropdownMenuItem asChild>
                 <Link className="cursor-pointer" href="/profile">
