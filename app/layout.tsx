@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   description: 'A learning platform'
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
   modal
 }: {
   children: React.ReactNode;
   modal?: React.ReactNode;
-}) {
+}) => {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
@@ -43,4 +43,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
