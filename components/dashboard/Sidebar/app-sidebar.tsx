@@ -3,7 +3,6 @@ import {
   Home,
   LayoutDashboard,
   LogOut,
-  Settings,
   UserCheck
 } from 'lucide-react';
 
@@ -42,11 +41,6 @@ const items = [
     title: 'Enrollment',
     url: '/enrollment',
     icon: BookOpenText
-  },
-  {
-    title: 'Settings',
-    url: '#',
-    icon: Settings
   }
 ];
 
@@ -57,7 +51,7 @@ export function DashboardSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-4">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
