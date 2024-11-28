@@ -29,7 +29,7 @@ const NavContent = () => {
             <Link
               href={item.route}
               className={`${
-                isActive ? 'bg-orange-500 text-white rounded-lg' : ''
+                isActive ? 'rounded-lg bg-orange-500 text-white' : ''
               } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               {/* <Image
@@ -39,7 +39,7 @@ const NavContent = () => {
                 height={20}
                 className={`${isActive ? '' : 'invert-colors'}`}
               /> */}
-              <p className={`${isActive ? '  base-bold' : 'base-medium'}`}>
+              <p className={`${isActive ? '  font-bold' : 'font-medium'}`}>
                 {item.label}
               </p>
             </Link>
@@ -62,7 +62,7 @@ const MobileNav = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className=" border-none overflow-y-auto no-scrollbar">
+      <SheetContent className=" no-scrollbar overflow-y-auto border-none">
         <div className="no-scrollbar flex grow flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <NavContent />
