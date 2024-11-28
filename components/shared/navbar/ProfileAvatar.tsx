@@ -10,9 +10,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import Link from 'next/link';
-import { LayoutDashboardIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
+import { LayoutDashboardIcon, LogOutIcon, UserCheck } from 'lucide-react';
 
 const ProfileAvatar = () => {
   const user = true;
@@ -21,7 +20,7 @@ const ProfileAvatar = () => {
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" className="relative size-8 ">
+            <Button variant="ghost" className="relative size-8 rounded-full">
               <Avatar className="size-8 ">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
@@ -40,7 +39,7 @@ const ProfileAvatar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/stores">
+                <Link className="cursor-pointer" href="/dashboard">
                   <LayoutDashboardIcon
                     className="mr-2 size-4"
                     aria-hidden="true"
@@ -51,16 +50,16 @@ const ProfileAvatar = () => {
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/account">
-                  <SettingsIcon className="mr-2 size-4" aria-hidden="true" />
-                  Settings
+                <Link className="cursor-pointer" href="/profile">
+                  <UserCheck className="mr-2 size-4" aria-hidden="true" />
+                  Profile
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/signout">
+              <Link className="cursor-pointer" href="/signout">
                 <LogOutIcon className="mr-2 size-4" aria-hidden="true" />
                 Log out
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
