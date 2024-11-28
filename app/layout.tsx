@@ -24,25 +24,18 @@ export const metadata: Metadata = {
   description: 'A learning platform'
 };
 
-const RootLayout = ({
-  children,
-  modal
+export default function RootLayout({
+  children
 }: {
   children: React.ReactNode;
-  modal?: React.ReactNode;
-}) => {
+}) {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <NextTopLoader showSpinner={false} />
-        <Providers>
-          {children}
-          {modal && modal}
-        </Providers>
+        <Providers>{children}</Providers>
         <BreakPointIndicator />
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
