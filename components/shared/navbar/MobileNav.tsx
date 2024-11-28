@@ -62,8 +62,8 @@ const MobileNav = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className=" no-scrollbar overflow-y-auto border-none">
-        <div className="no-scrollbar flex grow flex-col justify-between overflow-y-auto">
+      <SheetContent className="  overflow-y-auto border-none">
+        <div className=" flex grow flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <NavContent />
           </SheetClose>

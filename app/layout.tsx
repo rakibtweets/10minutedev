@@ -25,20 +25,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-  modal
-}: Readonly<{
+  children
+}: {
   children: React.ReactNode;
-  modal: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <NextTopLoader showSpinner={false} />
-        <Providers>
-          {children}
-          {modal}
-        </Providers>
+        <Providers>{children}</Providers>
         <BreakPointIndicator />
       </body>
     </html>
