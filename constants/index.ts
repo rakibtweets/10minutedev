@@ -98,3 +98,77 @@ export const courses = [
     videoCount: 28
   }
 ];
+
+export type ICourse = {
+  id: string;
+  name: string;
+  creationDate: Date;
+  accessible: 'published' | 'hidden' | 'pending';
+  lastUpdated: Date;
+  totalEnrolled: number;
+};
+
+export const coursesDatas: ICourse[] = [
+  {
+    id: '1',
+    name: 'Introduction to React',
+    creationDate: new Date('2023-01-15'),
+    accessible: 'published',
+    lastUpdated: new Date('2023-06-20'),
+    totalEnrolled: 1500
+  },
+  {
+    id: '2',
+    name: 'Advanced JavaScript Concepts',
+    creationDate: new Date('2023-02-28'),
+    accessible: 'hidden',
+    lastUpdated: new Date('2023-07-05'),
+    totalEnrolled: 800
+  },
+  {
+    id: '3',
+    name: 'CSS Mastery',
+    creationDate: new Date('2023-03-10'),
+    accessible: 'pending',
+    lastUpdated: new Date('2023-07-15'),
+    totalEnrolled: 1200
+  }
+  // Add more mock data as needed
+];
+
+export type IUser = {
+  id: string;
+  name: string;
+  accountCreation: Date;
+  lastUpdate: Date;
+  coursesEnrolled: number;
+  role: 'admin' | 'user' | 'editor';
+};
+
+export const users: IUser[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    accountCreation: new Date('2023-01-15'),
+    lastUpdate: new Date('2023-07-20'),
+    coursesEnrolled: 3,
+    role: 'user'
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    accountCreation: new Date('2023-02-28'),
+    lastUpdate: new Date('2023-07-25'),
+    coursesEnrolled: 5,
+    role: 'editor'
+  },
+  {
+    id: '3',
+    name: 'Admin User',
+    accountCreation: new Date('2022-12-01'),
+    lastUpdate: new Date('2023-07-28'),
+    coursesEnrolled: 0,
+    role: 'admin'
+  }
+  // Add more mock data as needed
+];
