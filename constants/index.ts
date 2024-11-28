@@ -98,3 +98,40 @@ export const courses = [
     videoCount: 28
   }
 ];
+
+export type ICourse = {
+  id: string;
+  name: string;
+  creationDate: Date;
+  accessible: 'published' | 'hidden' | 'pending';
+  lastUpdated: Date;
+  totalEnrolled: number;
+};
+
+export const coursesDatas: ICourse[] = [
+  {
+    id: '1',
+    name: 'Introduction to React',
+    creationDate: new Date('2023-01-15'),
+    accessible: 'published',
+    lastUpdated: new Date('2023-06-20'),
+    totalEnrolled: 1500
+  },
+  {
+    id: '2',
+    name: 'Advanced JavaScript Concepts',
+    creationDate: new Date('2023-02-28'),
+    accessible: 'hidden',
+    lastUpdated: new Date('2023-07-05'),
+    totalEnrolled: 800
+  },
+  {
+    id: '3',
+    name: 'CSS Mastery',
+    creationDate: new Date('2023-03-10'),
+    accessible: 'pending',
+    lastUpdated: new Date('2023-07-15'),
+    totalEnrolled: 1200
+  }
+  // Add more mock data as needed
+];
