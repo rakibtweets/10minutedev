@@ -135,3 +135,40 @@ export const coursesDatas: ICourse[] = [
   }
   // Add more mock data as needed
 ];
+
+export type IUser = {
+  id: string;
+  name: string;
+  accountCreation: Date;
+  lastUpdate: Date;
+  coursesEnrolled: number;
+  role: 'admin' | 'user' | 'editor';
+};
+
+export const users: IUser[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    accountCreation: new Date('2023-01-15'),
+    lastUpdate: new Date('2023-07-20'),
+    coursesEnrolled: 3,
+    role: 'user'
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    accountCreation: new Date('2023-02-28'),
+    lastUpdate: new Date('2023-07-25'),
+    coursesEnrolled: 5,
+    role: 'editor'
+  },
+  {
+    id: '3',
+    name: 'Admin User',
+    accountCreation: new Date('2022-12-01'),
+    lastUpdate: new Date('2023-07-28'),
+    coursesEnrolled: 0,
+    role: 'admin'
+  }
+  // Add more mock data as needed
+];
