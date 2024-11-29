@@ -21,7 +21,10 @@ const ProfileAvatar = () => {
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative size-8 rounded-full">
+            <Button
+              variant="ghost"
+              className="relative size-8 rounded-none outline-none hover:rounded-full focus:rounded-none focus:outline-none"
+            >
               <Avatar className="size-8 ">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>

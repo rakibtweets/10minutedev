@@ -56,13 +56,13 @@ const MobileNav = () => {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 "
         >
           <AlignJustifyIcon className="size-7" aria-hidden="true" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="  overflow-y-auto border-none">
+      <SheetContent className="overflow-y-auto border-none">
         <div className=" flex grow flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <NavContent />

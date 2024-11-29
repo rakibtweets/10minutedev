@@ -25,13 +25,22 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('light')}
+        >
           <SunIcon className="me-2 size-4" /> Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('dark')}
+        >
           <MoonIcon className="me-2 size-4" /> Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => setTheme('system')}
+        >
           <LaptopIcon className="me-2 size-4" /> System
         </DropdownMenuItem>
       </DropdownMenuContent>
