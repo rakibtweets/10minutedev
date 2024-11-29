@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import * as z from 'zod';
-import { Editor } from '@tinymce/tinymce-react';
 import { ImageUpload } from './ImageUpload';
 import { useTheme } from 'next-themes';
+
+import { Editor } from '@tinymce/tinymce-react';
 
 // const tags = [
 //   'React',
@@ -33,7 +34,6 @@ const CourseForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const editorRef = useRef(null);
   const { theme } = useTheme();
-  console.log('CourseForm  theme:', theme);
 
   const {
     handleSubmit,
