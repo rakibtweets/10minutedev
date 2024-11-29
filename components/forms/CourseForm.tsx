@@ -1,13 +1,14 @@
 'use client';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import * as z from 'zod';
-import { Textarea } from '@/components/ui/textarea';
+import { Editor } from '@tinymce/tinymce-react';
 import { ImageUpload } from './ImageUpload';
+import { useTheme } from 'next-themes';
 
 // const tags = [
 //   'React',
@@ -30,6 +31,9 @@ type CourseFormData = z.infer<typeof courseSchema>;
 
 const CourseForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const editorRef = useRef(null);
+  const { theme } = useTheme();
+  console.log('CourseForm  theme:', theme);
 
   const {
     handleSubmit,
@@ -64,7 +68,50 @@ const CourseForm = () => {
       </div>
       <div>
         <Label htmlFor="description">Course Description</Label>
-        <Textarea id="description" name="description" required />
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <Editor
+              apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+              onInit={(evt, editor) => {
+                // @ts-ignore
+                editorRef.current = editor;
+              }}
+              onBlur={field.onBlur}
+              // onEditorChange={(content) => field.onChange(content)}
+              initialValue={''}
+              init={{
+                height: 350,
+                menubar: false,
+                plugins: [
+                  'advlist',
+                  'autolink',
+                  'lists',
+                  'link',
+                  'image',
+                  'charmap',
+                  'preview',
+                  'anchor',
+                  'searchreplace',
+                  'visualblocks',
+                  'codesample',
+                  'fullscreen',
+                  'insertdatetime',
+                  'media',
+                  'table'
+                ],
+                toolbar:
+                  'undo redo | ' +
+                  ' bold italic forecolor | alignleft aligncenter |' +
+                  'alignright alignjustify | bullist numlist',
+                content_style: 'body { font-family:Inter; font-size:16px }',
+                skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
+                content_css: theme === 'dark' ? 'dark' : 'light'
+              }}
+            />
+          )}
+        />
       </div>
 
       <div>
