@@ -9,8 +9,10 @@ import {
 } from '@/components/ui/card';
 import SignInWithGoogle from '@/components/buttons/SignInWithGoogle';
 import SignInWithGithub from '@/components/buttons/SignInWithGithub';
+import { SearchParamsProps } from '@/types';
 
-export default function SignInPage() {
+export default function SignInPage({ searchParams }: SearchParamsProps) {
+  const error = searchParams.error || '';
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
@@ -36,6 +38,11 @@ export default function SignInPage() {
           </Link>
         </div>
       </CardFooter>
+      {error && (
+        <CardFooter className="flex items-center justify-center text-red-500">
+          {error}
+        </CardFooter>
+      )}
     </Card>
   );
 }

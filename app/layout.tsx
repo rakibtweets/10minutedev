@@ -34,6 +34,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <NextTopLoader showSpinner={false} />
         <Providers>{children}</Providers>
+
         <BreakPointIndicator />
       </body>
     </html>

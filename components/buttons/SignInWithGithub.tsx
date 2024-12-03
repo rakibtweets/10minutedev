@@ -1,8 +1,13 @@
+'use client';
 import { Button } from '@/components/ui/button';
 
 const SignInWithGithub = () => {
+  const handleGitHubLogin = () => {
+    window.location.href = `http://localhost:5000/api/auth/github`;
+  };
+
   return (
-    <Button className="w-full" variant="outline">
+    <Button onClick={handleGitHubLogin} className="w-full" variant="outline">
       <svg
         className="mr-3 size-4"
         fill="currentColor"
