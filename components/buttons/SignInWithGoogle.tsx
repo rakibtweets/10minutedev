@@ -1,8 +1,12 @@
+'use client'
 import { Button } from '../ui/button';
 
 const SignInWithGoogle = () => {
+  const handleGoolgeLogin = () => {
+    window.location.href = `http://localhost:5000/api/auth/google`;
+  };
   return (
-    <Button className="w-full" variant="outline">
+    <Button onClick={handleGoolgeLogin} className="w-full" variant="outline">
       <svg
         className="mr-3 size-4"
         fill="currentColor"
