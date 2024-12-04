@@ -1,9 +1,12 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const SignInWithGithub = () => {
+  const router = useRouter();
+
   const handleGitHubLogin = () => {
-    window.location.href = `http://localhost:5000/api/auth/github`;
+    router.push('http://localhost:5000/api/auth/github');
   };
 
   return (

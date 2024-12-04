@@ -1,9 +1,11 @@
-'use client'
+'use client';
+import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 
 const SignInWithGoogle = () => {
+  const router = useRouter();
   const handleGoolgeLogin = () => {
-    window.location.href = `http://localhost:5000/api/auth/google`;
+    router.push(`http://localhost:5000/api/auth/google`);
   };
   return (
     <Button onClick={handleGoolgeLogin} className="w-full" variant="outline">
