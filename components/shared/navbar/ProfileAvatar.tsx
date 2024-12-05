@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -12,10 +13,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { LayoutDashboardIcon, LogOutIcon, UserCheck } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ProfileAvatar = () => {
-  const user = true;
-  const isAdmin = true;
+  const { user, isLoading, logout } = useAuth();
+  console.log('ProfileAvatar  user:', user);
+
   return (
     <>
       {user ? (
@@ -23,20 +27,26 @@ const ProfileAvatar = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="relative size-8 rounded-none outline-none hover:rounded-full focus:rounded-none focus:outline-none"
+              className="relative size-8 rounded-full outline-none hover:rounded-full focus:rounded-none focus:outline-none"
             >
-              <Avatar className="size-8 ">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              {isLoading ? (
+                <Skeleton className="size-8 rounded-full" />
+              ) : (
+                <Avatar className="size-8 ">
+                  <AvatarImage src={user.avatarUrl} />
+                  <AvatarFallback>{user.displayName}</AvatarFallback>
+                </Avatar>
+              )}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">Rakib Hasan</p>
+                <p className="text-sm font-medium leading-none">
+                  {user.displayName}
+                </p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  rakib@gmail.com
+                  {user.email}
                 </p>
               </div>
             </DropdownMenuLabel>
@@ -52,7 +62,7 @@ const ProfileAvatar = () => {
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
-              {isAdmin && (
+              {user.isAdmin && (
                 <DropdownMenuItem asChild>
                   <Link className="cursor-pointer" href="/admin">
                     <LayoutDashboardIcon
@@ -74,18 +84,25 @@ const ProfileAvatar = () => {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link className="cursor-pointer" href="/signout">
+            <DropdownMenuItem
+              className="flex w-full cursor-pointer items-center justify-between outline-none hover:rounded-none hover:outline-none"
+              asChild
+            >
+              <Button
+                onClick={logout}
+                className="flex w-full cursor-pointer items-center justify-between outline-none hover:rounded-none hover:outline-none"
+                variant="ghost"
+              >
                 <LogOutIcon className="mr-2 size-4" aria-hidden="true" />
                 Log out
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-              </Link>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
         <Button size="sm">
-          <Link href="/signin">
+          <Link href="/sign-in">
             Sign In
             <span className="sr-only">Sign In</span>
           </Link>
