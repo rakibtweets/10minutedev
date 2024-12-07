@@ -4,8 +4,9 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 import NextTopLoader from 'nextjs-toploader';
-import Providers from '@/components/Providers';
 import { BreakPointIndicator } from '@/components/shared/BreakPointIndicator';
+import { Toaster } from '@/components/ui/toaster';
+import Providers from '@/Providers';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <NextTopLoader showSpinner={false} />
         <Providers>{children}</Providers>
+        <Toaster />
         <BreakPointIndicator />
       </body>
     </html>
