@@ -18,7 +18,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const ProfileAvatar = () => {
   const { user, isLoading, logout } = useAuth();
-  console.log('ProfileAvatar  user:', user);
 
   return (
     <>

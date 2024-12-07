@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { courses } from '@/constants';
 import { ArrowRight } from 'lucide-react';
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="max-w-6xl gap-0">
       <HeroBanner />

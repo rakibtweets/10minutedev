@@ -10,9 +10,17 @@ import {
 import SignInWithGoogle from '@/components/buttons/SignInWithGoogle';
 import SignInWithGithub from '@/components/buttons/SignInWithGithub';
 import { SearchParamsProps } from '@/types';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-export default function SignInPage({ searchParams }: SearchParamsProps) {
+export default async function SignInPage({ searchParams }: SearchParamsProps) {
   const error = searchParams.error || '';
+  const cookieStore = await cookies();
+  const userCookie = cookieStore.get('user');
+  const user = userCookie ? JSON.parse(userCookie.value) : null;
+  if (user) {
+    redirect('/');
+  }
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
@@ -27,8 +35,8 @@ export default function SignInPage({ searchParams }: SearchParamsProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <SignInWithGoogle />
-        <SignInWithGithub />
+        <SignInWithGoogle method="Sign In" />
+        <SignInWithGithub method="Sign In" />
       </CardContent>
       <CardFooter className="flex flex-wrap items-center justify-center gap-2">
         <div className="text-sm text-gray-500">

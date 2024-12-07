@@ -9,8 +9,16 @@ import {
 } from '@/components/ui/card';
 import SignInWithGoogle from '@/components/buttons/SignInWithGoogle';
 import SignInWithGithub from '@/components/buttons/SignInWithGithub';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-export default function SignUpPage() {
+export default async function SignUpPage() {
+  const cookieStore = await cookies();
+  const userCookie = cookieStore.get('user');
+  const user = userCookie ? JSON.parse(userCookie.value) : null;
+  if (user) {
+    redirect('/');
+  }
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
@@ -25,8 +33,8 @@ export default function SignUpPage() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <SignInWithGoogle />
-        <SignInWithGithub />
+        <SignInWithGoogle method="Sign up" />
+        <SignInWithGithub method="Sign up" />
       </CardContent>
       <CardFooter className="flex flex-wrap items-center justify-center gap-2">
         <div className="text-sm text-gray-500">
