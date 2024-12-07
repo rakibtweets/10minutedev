@@ -19,13 +19,12 @@ export const sidebarLinks: SidebarLink[] = [
   }
 ];
 
-interface Tag {
+export interface Tag {
   value: string;
   label: string;
 }
 
 export const tags: Tag[] = [
-  { value: 'all', label: 'All' },
   { value: 'nextjs', label: 'Next.js' },
   { value: 'reactjs', label: 'React.js' },
   { value: 'mongodb', label: 'MongoDB' },
