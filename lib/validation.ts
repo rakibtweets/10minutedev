@@ -17,5 +17,8 @@ export const courseFormSchema = z.object({
         .int({ message: 'Duration must be integer' })
     ),
   level: z.enum(['beginner', 'intermediate', 'advanced']),
-  tags: z.array(z.string()).nonempty('Please at least one item')
+  tags: z.array(z.string()).nonempty('Please at least one item'),
+  thumbnail: z.instanceof(File).refine((file) => file.size < 4 * 1024 * 1024, {
+    message: 'File size must be less than 4MB'
+  })
 });

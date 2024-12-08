@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { useTheme } from 'next-themes';
-
 import { Editor } from '@tinymce/tinymce-react';
 import { courseFormSchema } from '@/lib/validation';
 import { useToast } from '../ui/use-toast';
@@ -36,6 +35,8 @@ import {
 } from '@/components/ui/multi-select';
 import { Tag, tags } from '@/constants';
 
+import { ImageDropzone } from './image-dropzone';
+
 type CourseFormValues = z.infer<typeof courseFormSchema>;
 
 const CourseForm = () => {
@@ -43,6 +44,7 @@ const CourseForm = () => {
   const editorRef = useRef(null);
   const { theme } = useTheme();
   const { toast } = useToast();
+  const [preview, setPreview] = useState<string | null>(null);
 
   const form = useForm<CourseFormValues>({
     resolver: zodResolver(courseFormSchema),
@@ -50,9 +52,28 @@ const CourseForm = () => {
       title: '',
       instructor: '',
       description: '',
+      thumbnail: undefined,
       tags: []
     }
   });
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file.size >= 4 * 1024 * 1024) {
+      toast({
+        title: 'Error',
+        description: 'File size must be less than 4MB',
+        variant: 'destructive'
+      });
+      return;
+    }
+    setPreview(URL.createObjectURL(file));
+    form.setValue('thumbnail', file);
+  };
+
+  const clearImage = () => {
+    setPreview(null);
+    form.setValue('thumbnail', undefined as any);
+  };
 
   const onSubmit = async (values: CourseFormValues) => {
     try {
@@ -63,6 +84,8 @@ const CourseForm = () => {
         title: 'Course created',
         description: 'Your course has been created successfully.'
       });
+      form.reset();
+      clearImage();
     } catch (error) {
       console.error('Form submission error', error);
       toast({
@@ -254,6 +277,25 @@ const CourseForm = () => {
             />
           </div>
         </div>
+
+        <FormField
+          control={form.control}
+          name="thumbnail"
+          render={({ field: { onChange, ...field }, fieldState }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <ImageDropzone
+                  preview={preview}
+                  onDrop={onDrop}
+                  onClear={clearImage}
+                  error={fieldState.error?.message}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Creating Course...' : 'Create Course'}
