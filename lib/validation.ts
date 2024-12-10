@@ -4,7 +4,6 @@ export const courseFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   instructor: z.string().min(1, 'Instructor is required'),
   description: z.string().min(1, 'Description is required'),
-  // thumbnail: z.string().url('Must be a valid URL'),
   duration: z
     .number()
     .positive({ message: 'Duration must be positive' })
@@ -18,7 +17,23 @@ export const courseFormSchema = z.object({
     ),
   level: z.enum(['beginner', 'intermediate', 'advanced']),
   tags: z.array(z.string()).nonempty('Please at least one item'),
-  thumbnail: z.instanceof(File).refine((file) => file.size < 4 * 1024 * 1024, {
-    message: 'File size must be less than 4MB'
+  thumbnail: z.object({
+    url: z.union([
+      z.string().url('Must be a valid URL'), // Allows storing a URL
+      z
+        .instanceof(File)
+        .refine((file) => file.size < 4 * 1024 * 1024, {
+          message: 'File size must be less than 4MB'
+        })
+        .refine(
+          (file) =>
+            ['image/jpeg', 'image/png', 'image.jpg'].includes(file.type),
+          {
+            message: 'Only .jpg, .jpeg, and .png formats are supported'
+          }
+        ) // Allows validating an uploaded file
+    ]),
+    publicId: z.string().optional()
   })
 });
+export type CourseFormValues = z.infer<typeof courseFormSchema>;

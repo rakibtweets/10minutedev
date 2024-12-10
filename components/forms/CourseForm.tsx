@@ -4,15 +4,13 @@ import React, { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { useTheme } from 'next-themes';
 import { Editor } from '@tinymce/tinymce-react';
-import { courseFormSchema } from '@/lib/validation';
+import { courseFormSchema, CourseFormValues } from '@/lib/validation';
 import { useToast } from '../ui/use-toast';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,13 +32,10 @@ import {
   MultiSelectorTrigger
 } from '@/components/ui/multi-select';
 import { Tag, tags } from '@/constants';
-
 import { ImageDropzone } from './image-dropzone';
-
-type CourseFormValues = z.infer<typeof courseFormSchema>;
+import { useCreateCourse } from '@/hooks/use-create-course';
 
 const CourseForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const editorRef = useRef(null);
   const { theme } = useTheme();
   const { toast } = useToast();
@@ -52,11 +47,16 @@ const CourseForm = () => {
       title: '',
       instructor: '',
       description: '',
-      thumbnail: undefined,
+      thumbnail: {
+        url: undefined,
+        publicId: ''
+      },
+      duration: 0,
       tags: []
     }
   });
-  const onDrop = (acceptedFiles: File[]) => {
+
+  const onDrop = async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file.size >= 4 * 1024 * 1024) {
       toast({
@@ -66,38 +66,44 @@ const CourseForm = () => {
       });
       return;
     }
+
+    console.log('file', file);
+
     setPreview(URL.createObjectURL(file));
-    form.setValue('thumbnail', file);
+    form.setValue('thumbnail.url', file);
   };
 
   const clearImage = () => {
     setPreview(null);
-    form.setValue('thumbnail', undefined as any);
+    form.setValue('thumbnail.url', undefined as any);
   };
 
+  const { mutate } = useCreateCourse();
+
   const onSubmit = async (values: CourseFormValues) => {
-    try {
-      setIsSubmitting(true);
-      console.log(values);
-      toast({
-        variant: 'default',
-        title: 'Course created',
-        description: 'Your course has been created successfully.'
-      });
-      form.reset();
-      clearImage();
-    } catch (error) {
-      console.error('Form submission error', error);
-      toast({
-        variant: 'destructive',
-        title: 'Form submission error',
-        description: error as string
-      });
-      setIsSubmitting(false);
-    } finally {
-      setIsSubmitting(false);
-    }
+    console.log('form value', values);
+
+    console.log(JSON.stringify(values));
+
+    mutate(values, {
+      onSuccess: () => {
+        form.reset();
+        clearImage();
+      },
+      onError: (error: unknown) => {
+        // @ts-ignore
+        console.error('Form submission error', error?.message);
+
+        toast({
+          title: 'Error',
+          // @ts-ignore
+          description: error?.message,
+          variant: 'destructive'
+        });
+      }
+    });
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -110,9 +116,6 @@ const CourseForm = () => {
               <FormControl>
                 <Input placeholder="Enter Course name" type="text" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public course name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -280,10 +283,10 @@ const CourseForm = () => {
 
         <FormField
           control={form.control}
-          name="thumbnail"
+          name="thumbnail.url"
           render={({ field: { onChange, ...field }, fieldState }) => (
             <FormItem>
-              <FormLabel>Image</FormLabel>
+              <FormLabel>Thmumbail</FormLabel>
               <FormControl>
                 <ImageDropzone
                   preview={preview}
@@ -297,8 +300,8 @@ const CourseForm = () => {
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Creating Course...' : 'Create Course'}
+        <Button type="submit" disabled={form.formState.isLoading}>
+          {form.formState.isLoading ? 'Creating Course...' : 'Create Course'}
         </Button>
       </form>
     </Form>
