@@ -5,34 +5,33 @@ export const courseFormSchema = z.object({
   instructor: z.string().min(1, 'Instructor is required'),
   description: z.string().min(1, 'Description is required'),
   duration: z
-    .number()
-    .positive({ message: 'Duration must be positive' })
-    .int({ message: 'Duration must be integer' })
-    .or(z.string())
-    .pipe(
-      z.coerce
+    .union([
+      z
         .number()
         .positive({ message: 'Duration must be positive' })
-        .int({ message: 'Duration must be integer' })
+        .int({ message: 'Duration must be an integer' }),
+      z
+        .string()
+        .refine((value) => value.trim() !== '', {
+          message: 'Duration is required'
+        })
+        .transform((value) => {
+          const num = parseFloat(value);
+          if (isNaN(num)) throw new Error('Duration must be a valid number');
+          return num;
+        })
+    ])
+    .refine(
+      (value) =>
+        typeof value === 'number' && value > 0 && Number.isInteger(value),
+      {
+        message: 'Duration must be a positive integer'
+      }
     ),
-  level: z.enum(['beginner', 'intermediate', 'advanced']),
+  level: z.string().min(1, 'level is required'),
   tags: z.array(z.string()).nonempty('Please at least one item'),
   thumbnail: z.object({
-    url: z.union([
-      z.string().url('Must be a valid URL'), // Allows storing a URL
-      z
-        .instanceof(File)
-        .refine((file) => file.size < 4 * 1024 * 1024, {
-          message: 'File size must be less than 4MB'
-        })
-        .refine(
-          (file) =>
-            ['image/jpeg', 'image/png', 'image.jpg'].includes(file.type),
-          {
-            message: 'Only .jpg, .jpeg, and .png formats are supported'
-          }
-        ) // Allows validating an uploaded file
-    ]),
+    url: z.string().min(1, 'thumbnail is required'),
     publicId: z.string().optional()
   })
 });

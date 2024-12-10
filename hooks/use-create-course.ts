@@ -1,9 +1,10 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
 import { createCourse } from '@/lib/api/courses';
-import { toast } from './use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 export const useCreateCourse = () => {
+  const { toast } = useToast();
   return useMutation({
     mutationFn: createCourse,
     onSuccess: () => {

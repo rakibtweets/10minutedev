@@ -37,6 +37,7 @@ import { useCreateCourse } from '@/hooks/use-create-course';
 
 const CourseForm = () => {
   const editorRef = useRef(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const { toast } = useToast();
   const [preview, setPreview] = useState<string | null>(null);
@@ -48,10 +49,11 @@ const CourseForm = () => {
       instructor: '',
       description: '',
       thumbnail: {
-        url: undefined,
+        url: '',
         publicId: ''
       },
-      duration: 0,
+      duration: undefined,
+      level: '',
       tags: []
     }
   });
@@ -66,11 +68,22 @@ const CourseForm = () => {
       });
       return;
     }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        form.setValue('thumbnail.url', fileReader.result as string);
+        form.clearErrors('thumbnail.url');
+      }
+    };
 
-    console.log('file', file);
+    fileReader.onloadend = () => {
+      setPreview(fileReader.result as string);
+    };
 
-    setPreview(URL.createObjectURL(file));
-    form.setValue('thumbnail.url', file);
+    fileReader.readAsDataURL(file as File);
+
+    // setPreview(URL.createObjectURL(file));
+    // form.setValue('thumbnail.url', file);
   };
 
   const clearImage = () => {
@@ -78,28 +91,27 @@ const CourseForm = () => {
     form.setValue('thumbnail.url', undefined as any);
   };
 
-  const { mutate } = useCreateCourse();
+  const { mutate: mutateCourse } = useCreateCourse();
 
   const onSubmit = async (values: CourseFormValues) => {
-    console.log('form value', values);
-
-    console.log(JSON.stringify(values));
-
-    mutate(values, {
+    setIsLoading(true);
+    mutateCourse(values, {
       onSuccess: () => {
         form.reset();
         clearImage();
+
+        setIsLoading(false);
       },
       onError: (error: unknown) => {
         // @ts-ignore
-        console.error('Form submission error', error?.message);
-
+        // console.error('Form submission error', error?.message);
         toast({
           title: 'Error',
           // @ts-ignore
           description: error?.message,
           variant: 'destructive'
         });
+        setIsLoading(false);
       }
     });
   };
@@ -300,8 +312,8 @@ const CourseForm = () => {
           )}
         />
 
-        <Button type="submit" disabled={form.formState.isLoading}>
-          {form.formState.isLoading ? 'Creating Course...' : 'Create Course'}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Creating Course...' : 'Create Course'}
         </Button>
       </form>
     </Form>
