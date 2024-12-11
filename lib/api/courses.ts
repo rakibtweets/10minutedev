@@ -26,3 +26,27 @@ export const createCourse = async (values: CourseFormValues) => {
     throw new Error(`Failed to create course: ${error}`);
   }
 };
+
+export const getCourses = async () => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/courses`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessages = errorResponse.errors || [];
+      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
+      throw new Error(`${response.status} - ${errorMessage}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw new Error(`Failed to fetch course: ${error}`);
+  }
+};

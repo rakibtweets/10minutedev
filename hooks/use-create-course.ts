@@ -1,13 +1,15 @@
 'use client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCourse } from '@/lib/api/courses';
 import { useToast } from '@/components/ui/use-toast';
 
 export const useCreateCourse = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createCourse,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['courses'] });
       toast({
         variant: 'default',
         title: 'Course created',

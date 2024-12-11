@@ -1,14 +1,25 @@
-import { DataTable } from '../tables/data-table';
-import { coursesDatas } from '@/constants';
+'use client';
+import { CourseTable } from '../tables/course-table';
 import { columns } from '@/components/admin/tables/course-columns';
+import { TableSkeleton } from '@/components/ui/table-skeleton';
+import { useGetCourses } from '@/hooks/useGetCourses';
 
-const getCourses = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 6000));
-  return coursesDatas;
-};
+const Courses = () => {
+  const { data: courses, isError, error, isLoading } = useGetCourses();
 
-const Courses = async () => {
-  const courses = await getCourses();
-  return <DataTable columns={columns} data={courses} />;
+  if (isLoading) {
+    return <TableSkeleton columnCount={5} rowCount={5} showPagination={true} />;
+  }
+
+  if (isError) {
+    return (
+      <div className="py-4 text-center text-red-500">
+        Error:{' '}
+        {error instanceof Error ? error.message : 'Failed to fetch courses'}
+      </div>
+    );
+  }
+
+  return <CourseTable columns={columns} data={courses} />;
 };
 export default Courses;
