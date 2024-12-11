@@ -2,7 +2,12 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontal, ArrowUpDown } from 'lucide-react';
+import {
+  MoreHorizontal,
+  ArrowUpDown,
+  CheckCircle,
+  XCircle
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,71 +16,77 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
-import { ICourse } from '@/constants';
+import Image from 'next/image';
+import { ICourse } from '@/types';
 
 export const columns: ColumnDef<ICourse>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: 'index',
+    header: 'No.',
+    cell: ({ row }) => <div>{row.index + 1}</div>
+  },
+  {
+    accessorKey: 'thumbnail',
+    header: 'Thumbnail',
+    cell: ({ row }) => (
+      <div className="relative size-16">
+        <Image
+          src={row.original.thumbnail.url}
+          alt={row.original.title}
+          fill
+          className="rounded-md object-cover"
+        />
+      </div>
+    )
+  },
+  {
+    accessorKey: 'title',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Course Name
+          Title
           <ArrowUpDown className="ml-2 size-4" />
         </Button>
       );
     }
   },
   {
-    accessorKey: 'creationDate',
-    header: 'Creation Date',
-    cell: ({ row }) => {
-      return new Date(row.getValue('creationDate')).toLocaleDateString();
-    }
+    accessorKey: 'instructor',
+    header: 'Instructor'
   },
   {
-    accessorKey: 'accessible',
-    header: 'Accessible',
-    cell: ({ row }) => {
-      const status = row.getValue('accessible') as string;
-      return (
-        <Badge
-          variant={
-            status === 'published'
-              ? 'default'
-              : status === 'hidden'
-                ? 'secondary'
-                : 'destructive'
-          }
-        >
-          {status}
-        </Badge>
-      );
-    }
-  },
-  {
-    accessorKey: 'lastUpdated',
-    header: 'Last Updated',
-    cell: ({ row }) => {
-      return new Date(row.getValue('lastUpdated')).toLocaleDateString();
-    }
-  },
-  {
-    accessorKey: 'totalEnrolled',
+    accessorKey: 'enrolledStudents',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Total Enrolled
+          Enrolled Students
           <ArrowUpDown className="ml-2 size-4" />
         </Button>
       );
     }
+  },
+  {
+    accessorKey: 'level',
+    header: 'Level'
+  },
+  {
+    accessorKey: 'isPublished',
+    header: 'Published',
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        {row.original.isPublished ? (
+          <CheckCircle className="text-green-500" />
+        ) : (
+          <XCircle className="text-red-500" />
+        )}
+      </div>
+    )
   },
   {
     id: 'actions',
@@ -93,7 +104,7 @@ export const columns: ColumnDef<ICourse>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(course.id)}
+              onClick={() => navigator.clipboard.writeText(course._id)}
             >
               Copy course ID
             </DropdownMenuItem>

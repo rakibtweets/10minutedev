@@ -1,4 +1,4 @@
-import { SidebarLink } from '@/types';
+import { ICourse, SidebarLink } from '@/types';
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -98,41 +98,40 @@ export const courses = [
   }
 ];
 
-export type ICourse = {
-  id: string;
-  name: string;
-  creationDate: Date;
-  accessible: 'published' | 'hidden' | 'pending';
-  lastUpdated: Date;
-  totalEnrolled: number;
-};
-
 export const coursesDatas: ICourse[] = [
   {
-    id: '1',
-    name: 'Introduction to React',
-    creationDate: new Date('2023-01-15'),
-    accessible: 'published',
-    lastUpdated: new Date('2023-06-20'),
-    totalEnrolled: 1500
+    _id: '1',
+    title: 'Introduction to React',
+    instructor: 'John Doe',
+    enrolledStudents: 100,
+    level: 'beginner',
+    isPublished: true,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   },
   {
-    id: '2',
-    name: 'Advanced JavaScript Concepts',
-    creationDate: new Date('2023-02-28'),
-    accessible: 'hidden',
-    lastUpdated: new Date('2023-07-05'),
-    totalEnrolled: 800
+    _id: '2',
+    title: 'Advanced Node.js',
+    instructor: 'Jane Smith',
+    enrolledStudents: 75,
+    level: 'advanced',
+    isPublished: false,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   },
   {
-    id: '3',
-    name: 'CSS Mastery',
-    creationDate: new Date('2023-03-10'),
-    accessible: 'pending',
-    lastUpdated: new Date('2023-07-15'),
-    totalEnrolled: 1200
+    _id: '3',
+    title: 'Python for Data Science',
+    instructor: 'Alice Johnson',
+    enrolledStudents: 150,
+    level: 'intermediate',
+    isPublished: true,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   }
-  // Add more mock data as needed
 ];
 
 export type IUser = {

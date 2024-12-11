@@ -18,8 +18,6 @@ export const createCourse = async (values: CourseFormValues) => {
     }
 
     const result = await response.json();
-    console.log('createCourse  result:', result);
-
     return result;
   } catch (error) {
     console.error('API Error:', error);
