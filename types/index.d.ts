@@ -2,6 +2,9 @@ export interface SidebarLink {
   route: string;
   label: string;
 }
+export interface ParamsProps {
+  params: { id: string };
+}
 
 export interface SearchParamsProps {
   searchParams: { [key: string]: string | undefined };

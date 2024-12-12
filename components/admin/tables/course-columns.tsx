@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
 import { ICourse } from '@/types';
+import Link from 'next/link';
 
 export const columns: ColumnDef<ICourse>[] = [
   {
@@ -109,7 +110,11 @@ export const columns: ColumnDef<ICourse>[] = [
               Copy course ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit course</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/admin/courses/edit/${course._id}`}>
+                Edit course
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Delete course</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

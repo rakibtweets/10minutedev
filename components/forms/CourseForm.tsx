@@ -34,27 +34,37 @@ import {
 import { Tag, tags } from '@/constants';
 import { ImageDropzone } from './image-dropzone';
 import { useCreateCourse } from '@/hooks/use-create-course';
+import { ICourse } from '@/types';
+import { useUpdateCourse } from '@/hooks/useUpdateCourse';
 
-const CourseForm = () => {
+interface CourseFormProps {
+  courseId?: string;
+  course?: Partial<ICourse>;
+  type?: string;
+}
+
+const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
   const editorRef = useRef(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useTheme();
   const { toast } = useToast();
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(
+    course?.thumbnail?.url || null
+  );
 
   const form = useForm<CourseFormValues>({
     resolver: zodResolver(courseFormSchema),
     defaultValues: {
-      title: '',
-      instructor: '',
-      description: '',
+      title: course?.title || '',
+      instructor: course?.instructor || '',
+      description: course?.description || '',
       thumbnail: {
-        url: '',
-        publicId: ''
+        url: course?.thumbnail?.url || '',
+        publicId: course?.thumbnail?.publicId || ''
       },
-      duration: undefined,
-      level: '',
-      tags: []
+      duration: course?.duration || undefined,
+      level: course?.level || '',
+      tags: course?.tags || []
     }
   });
 
@@ -91,29 +101,58 @@ const CourseForm = () => {
     form.setValue('thumbnail.url', undefined as any);
   };
 
-  const { mutate: mutateCourse } = useCreateCourse();
+  const { mutate: createCourse } = useCreateCourse();
+  const { mutate: updateCourse } = useUpdateCourse(course?._id as string);
 
   const onSubmit = async (values: CourseFormValues) => {
     setIsLoading(true);
-    mutateCourse(values, {
-      onSuccess: () => {
-        form.reset();
-        clearImage();
+    if (type === 'create') {
+      createCourse(values, {
+        onSuccess: () => {
+          form.reset();
+          clearImage();
 
-        setIsLoading(false);
-      },
-      onError: (error: unknown) => {
-        // @ts-ignore
-        // console.error('Form submission error', error?.message);
-        toast({
-          title: 'Error',
+          setIsLoading(false);
+        },
+        onError: (error: unknown) => {
           // @ts-ignore
-          description: error?.message,
-          variant: 'destructive'
-        });
-        setIsLoading(false);
-      }
-    });
+          // console.error('Form submission error', error?.message);
+          toast({
+            title: 'Error',
+            // @ts-ignore
+            description: error?.message,
+            variant: 'destructive'
+          });
+          setIsLoading(false);
+        }
+      });
+    } else {
+      // update course
+      updateCourse(values, {
+        onSuccess: () => {
+          form.reset();
+          clearImage();
+          setIsLoading(false);
+          toast({
+            title: 'Success',
+            // @ts-ignore
+            description: 'Course updated successfully',
+            variant: 'default'
+          });
+        },
+        onError: (error: unknown) => {
+          // @ts-ignore
+          // console.error('Form submission error', error?.message);
+          toast({
+            title: 'Error',
+            // @ts-ignore
+            description: error?.message,
+            variant: 'destructive'
+          });
+          setIsLoading(false);
+        }
+      });
+    }
   };
 
   return (
@@ -166,7 +205,7 @@ const CourseForm = () => {
                   }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue={''}
+                  initialValue={course?.description || ''}
                   init={{
                     height: 350,
                     menubar: false,
@@ -313,7 +352,13 @@ const CourseForm = () => {
         />
 
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Creating Course...' : 'Create Course'}
+          {isLoading ? (
+            <>
+              {type === 'create' ? 'Creating Course...' : 'Updating Course...'}
+            </>
+          ) : (
+            <>{type === 'create' ? 'Create Course' : 'Update Course'}</>
+          )}
         </Button>
       </form>
     </Form>
