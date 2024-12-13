@@ -1,4 +1,5 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import React, { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
@@ -36,6 +37,7 @@ import { ImageDropzone } from './image-dropzone';
 import { useCreateCourse } from '@/hooks/use-create-course';
 import { ICourse } from '@/types';
 import { useUpdateCourse } from '@/hooks/useUpdateCourse';
+import { useRouter } from 'next/navigation';
 
 interface CourseFormProps {
   courseId?: string;
@@ -44,6 +46,7 @@ interface CourseFormProps {
 }
 
 const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
+  const router = useRouter();
   const editorRef = useRef(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { theme } = useTheme();
@@ -91,9 +94,6 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
     };
 
     fileReader.readAsDataURL(file as File);
-
-    // setPreview(URL.createObjectURL(file));
-    // form.setValue('thumbnail.url', file);
   };
 
   const clearImage = () => {
@@ -139,6 +139,7 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
             description: 'Course updated successfully',
             variant: 'default'
           });
+          router.push('/admin/courses');
         },
         onError: (error: unknown) => {
           // @ts-ignore
