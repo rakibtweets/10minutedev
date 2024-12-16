@@ -1,7 +1,6 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { IUser } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal, ArrowUpDown } from 'lucide-react';
 import {
@@ -13,8 +12,14 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { IUser } from '@/types';
 
 export const columns: ColumnDef<IUser>[] = [
+  {
+    accessorKey: 'index',
+    header: 'No.',
+    cell: ({ row }) => <div>{row.index + 1}</div>
+  },
   {
     accessorKey: 'name',
     header: ({ column }) => {
@@ -30,21 +35,35 @@ export const columns: ColumnDef<IUser>[] = [
     }
   },
   {
-    accessorKey: 'accountCreation',
-    header: 'Account Creation',
-    cell: ({ row }) => {
-      return new Date(row.getValue('accountCreation')).toLocaleDateString();
+    accessorKey: 'email',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Email
+          <ArrowUpDown className="ml-2 size-4" />
+        </Button>
+      );
     }
   },
   {
-    accessorKey: 'lastUpdate',
-    header: 'Last Update',
+    accessorKey: 'createdAt',
+    header: 'Created At',
     cell: ({ row }) => {
-      return new Date(row.getValue('lastUpdate')).toLocaleDateString();
+      return new Date(row.getValue('createdAt')).toLocaleDateString();
     }
   },
   {
-    accessorKey: 'coursesEnrolled',
+    accessorKey: 'updatedAt',
+    header: 'Last Updated',
+    cell: ({ row }) => {
+      return new Date(row.getValue('updatedAt')).toLocaleDateString();
+    }
+  },
+  {
+    accessorKey: 'enrolledCourses',
     header: ({ column }) => {
       return (
         <Button
@@ -55,6 +74,10 @@ export const columns: ColumnDef<IUser>[] = [
           <ArrowUpDown className="ml-2 size-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const courses = row.getValue('enrolledCourses') as string[];
+      return courses.length;
     }
   },
   {
@@ -93,7 +116,7 @@ export const columns: ColumnDef<IUser>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+              onClick={() => navigator.clipboard.writeText(user._id)}
             >
               Copy user ID
             </DropdownMenuItem>

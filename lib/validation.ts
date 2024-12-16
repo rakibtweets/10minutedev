@@ -80,3 +80,14 @@ export const updateCourseSchema = z.object({
 
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
 export type UpdateCourseFormValues = z.infer<typeof updateCourseSchema>;
+
+export const UserSchema = z.object({
+  _id: z.string().optional(), // MongoDB ObjectId
+  email: z.string().email('Invalid email address'), // Assuming possible auth types
+  isAdmin: z.boolean(),
+  isDeactivated: z.boolean(),
+  displayName: z.string().min(1, 'Display name is required'),
+  avatarUrl: z.string().url('Invalid URL format')
+});
+
+export type UserFormValues = z.infer<typeof UserSchema>;

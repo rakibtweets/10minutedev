@@ -44,3 +44,33 @@ export interface ICourse {
   level: 'beginner' | 'intermediate' | 'advanced';
   isPublished?: boolean;
 }
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  authType?: 'google' | 'github';
+  enrolledCourses?: Array<{
+    courseId: string;
+    progress: number;
+    completedModules: string[];
+    watchedVideos: string[];
+    enrolledAt: Date;
+  }>;
+  isAdmin?: boolean;
+  google?: {
+    id: string;
+    email: string;
+    picture: string;
+  };
+  github?: {
+    id: string;
+    avatarUrl: string;
+  };
+  updatedAt: Date;
+  createdAt: Date;
+  isDeactivated?: boolean;
+  accessToken?: string | null | undefined;
+  accessTokenIV?: string | null | undefined;
+}
