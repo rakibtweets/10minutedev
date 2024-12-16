@@ -1,7 +1,7 @@
 'use client';
 import CourseForm from '@/components/forms/CourseForm';
 import SkeletonForm from '@/components/Skeletons/form-skeleton';
-import { useGetSingleCourse } from '@/hooks/useGetSingleCourse';
+import { useGetSingleCourse } from '@/hooks/course';
 import { ParamsProps } from '@/types';
 import { useParams } from 'next/navigation';
 

@@ -34,9 +34,8 @@ import {
 } from '@/components/ui/multi-select';
 import { Tag, tags } from '@/constants';
 import { ImageDropzone } from './image-dropzone';
-import { useCreateCourse } from '@/hooks/use-create-course';
+import { useCreateCourse, useUpdateCourse } from '@/hooks/course';
 import { ICourse } from '@/types';
-import { useUpdateCourse } from '@/hooks/useUpdateCourse';
 import { useRouter } from 'next/navigation';
 
 interface CourseFormProps {
@@ -111,8 +110,8 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
         onSuccess: () => {
           form.reset();
           clearImage();
-
           setIsLoading(false);
+          router.push('/admin/courses');
         },
         onError: (error: unknown) => {
           // @ts-ignore

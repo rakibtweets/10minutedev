@@ -139,3 +139,29 @@ export const updateCourseIsPublished = async (
     throw new Error(`Failed to update course publication status: ${error}`);
   }
 };
+
+export const deleteCourse = async (courseId: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/courses/${courseId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessages = errorResponse.errors || [];
+      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
+      throw new Error(`${response.status} - ${errorMessage}`);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error('API Error:', error);
+    throw new Error(`Failed to delete course: ${error}`);
+  }
+};

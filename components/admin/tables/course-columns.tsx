@@ -20,6 +20,7 @@ import Image from 'next/image';
 import { ICourse } from '@/types';
 import Link from 'next/link';
 import PublishCourseButton from '@/components/buttons/PublishCourseButton';
+import DeleteCourseButton from '@/components/buttons/DeleteCourseButton';
 
 export const columns: ColumnDef<ICourse>[] = [
   {
@@ -118,9 +119,7 @@ export const columns: ColumnDef<ICourse>[] = [
               </Link>
             </DropdownMenuItem>
             <PublishCourseButton course={course} />
-            <DropdownMenuItem className="cursor-pointer">
-              Delete course
-            </DropdownMenuItem>
+            <DeleteCourseButton courseId={course._id} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

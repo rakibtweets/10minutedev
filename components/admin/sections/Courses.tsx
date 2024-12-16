@@ -2,7 +2,7 @@
 import { CourseTable } from '../tables/course-table';
 import { columns } from '@/components/admin/tables/course-columns';
 import { TableSkeleton } from '@/components/ui/table-skeleton';
-import { useGetCourses } from '@/hooks/useGetCourses';
+import { useGetCourses } from '@/hooks/course';
 
 const Courses = () => {
   const { data: courses, isError, error, isLoading } = useGetCourses();

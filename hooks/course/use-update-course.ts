@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateCourse, updateCourseIsPublished } from '../lib/api/courses';
+import { updateCourse, updateCourseIsPublished } from '@/lib/api/courses';
 import { UpdateCourseFormValues } from '@/lib/validation';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -23,8 +23,6 @@ export function useUpdateCourseIsPublished(courseId: string) {
     mutationFn: (isPublished: boolean) =>
       updateCourseIsPublished(courseId, isPublished),
     onSuccess: (data) => {
-      // Update the cache with the new data
-      console.log(data.isPublished);
       queryClient.setQueryData(['course', courseId], data);
       queryClient.invalidateQueries({ queryKey: ['courses'] });
 

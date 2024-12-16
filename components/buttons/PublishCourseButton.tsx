@@ -1,5 +1,5 @@
 'use client';
-import { useUpdateCourseIsPublished } from '@/hooks/useUpdateCourse';
+import { useUpdateCourseIsPublished } from '@/hooks/course';
 import { ICourse } from '@/types';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 
