@@ -4,6 +4,7 @@ export interface SidebarLink {
 }
 export interface ParamsProps {
   params: { id: string };
+  [key: string]: string;
 }
 
 export interface SearchParamsProps {

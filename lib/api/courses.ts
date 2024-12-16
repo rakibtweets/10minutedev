@@ -1,4 +1,4 @@
-import { CourseFormValues } from '../validation';
+import { CourseFormValues, UpdateCourseFormValues } from '../validation';
 
 export const createCourse = async (values: CourseFormValues) => {
   try {
@@ -80,7 +80,7 @@ export const getCourse = async (courseId: string) => {
 
 export const updateCourse = async (
   courseId: string,
-  values: CourseFormValues
+  values: UpdateCourseFormValues
 ) => {
   try {
     const response = await fetch(
@@ -106,5 +106,36 @@ export const updateCourse = async (
   } catch (error) {
     console.error('API Error:', error);
     throw new Error(`Failed to update course: ${error}`);
+  }
+};
+
+export const updateCourseIsPublished = async (
+  courseId: string,
+  isPublished: boolean
+) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/courses/${courseId}/publish`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isPublished })
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessages = errorResponse.errors || [];
+      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
+      throw new Error(`${response.status} - ${errorMessage}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw new Error(`Failed to update course publication status: ${error}`);
   }
 };

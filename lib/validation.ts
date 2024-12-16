@@ -35,4 +35,48 @@ export const courseFormSchema = z.object({
     publicId: z.string().optional()
   })
 });
+
+export const updateCourseSchema = z.object({
+  title: z.string().min(1, 'Title is required').optional(),
+  instructor: z.string().min(1, 'Instructor is required').optional(),
+  description: z.string().min(1, 'Description is required').optional(),
+  duration: z
+    .union([
+      z
+        .number()
+        .positive({ message: 'Duration must be positive' })
+        .int({ message: 'Duration must be an integer' })
+        .optional(),
+      z
+        .string()
+        .refine((value) => value.trim() !== '', {
+          message: 'Duration is required'
+        })
+        .transform((value) => {
+          const num = parseFloat(value);
+          if (isNaN(num)) throw new Error('Duration must be a valid number');
+          return num;
+        })
+        .optional()
+    ])
+    .refine(
+      (value) =>
+        typeof value === 'number' && value > 0 && Number.isInteger(value),
+      {
+        message: 'Duration must be a positive integer'
+      }
+    )
+    .optional(),
+  level: z.string().min(1, 'level is required').optional(),
+  tags: z.array(z.string()).nonempty('Please at least one item').optional(),
+  thumbnail: z
+    .object({
+      url: z.string().min(1, 'thumbnail is required').optional(),
+      publicId: z.string().optional()
+    })
+    .optional(),
+  isPublished: z.boolean().optional()
+});
+
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
+export type UpdateCourseFormValues = z.infer<typeof updateCourseSchema>;

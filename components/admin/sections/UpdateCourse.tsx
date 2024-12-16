@@ -2,14 +2,17 @@
 import CourseForm from '@/components/forms/CourseForm';
 import SkeletonForm from '@/components/Skeletons/form-skeleton';
 import { useGetSingleCourse } from '@/hooks/useGetSingleCourse';
+import { ParamsProps } from '@/types';
+import { useParams } from 'next/navigation';
 
-const UpdateCourse = ({ courseId }: { courseId: string }) => {
+const UpdateCourse = () => {
+  const params = useParams<ParamsProps>();
   const {
     data: course,
     isLoading,
     isError,
     error
-  } = useGetSingleCourse(courseId);
+  } = useGetSingleCourse(params?.id);
 
   if (isLoading) {
     return <SkeletonForm />;

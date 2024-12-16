@@ -19,6 +19,7 @@ import {
 import Image from 'next/image';
 import { ICourse } from '@/types';
 import Link from 'next/link';
+import PublishCourseButton from '@/components/buttons/PublishCourseButton';
 
 export const columns: ColumnDef<ICourse>[] = [
   {
@@ -105,17 +106,21 @@ export const columns: ColumnDef<ICourse>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
+              className="cursor-pointer"
               onClick={() => navigator.clipboard.writeText(course._id)}
             >
               Copy course ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
               <Link href={`/admin/courses/edit/${course._id}`}>
                 Edit course
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete course</DropdownMenuItem>
+            <PublishCourseButton course={course} />
+            <DropdownMenuItem className="cursor-pointer">
+              Delete course
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
