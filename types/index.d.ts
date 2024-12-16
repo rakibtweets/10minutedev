@@ -13,11 +13,11 @@ export interface SearchParamsProps {
 export interface UserProfile {
   _id: string;
   email: string;
-  authType: string;
-  isAdmin: boolean;
-  isDeactivated: boolean;
+  authType?: string;
+  isAdmin?: boolean;
+  isDeactivated?: boolean;
   displayName: string;
-  avatarUrl: string;
+  avatarUrl?: string;
 }
 
 export interface AuthContextType {

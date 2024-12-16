@@ -1,16 +1,18 @@
-import ProfileForm from '@/components/dashboard/forms/ProfileForm';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import UserProfile from '@/components/sections/UserProfile';
+import { UserProfileCardSkeleton } from '@/components/Skeletons/user-profile-skeleton';
+import { Suspense } from 'react';
 
 const ProfilePage = () => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">My Profile</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ProfileForm />
-      </CardContent>
-    </Card>
+    <>
+      <div className="space-y-6">
+        <h1 className=" text-2xl font-bold">My Profile</h1>
+
+        <Suspense fallback={<UserProfileCardSkeleton />}>
+          <UserProfile />
+        </Suspense>
+      </div>
+    </>
   );
 };
 export default ProfilePage;

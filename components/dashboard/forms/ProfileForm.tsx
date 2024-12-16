@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/ui/input';
+import { UserProfile } from '@/types';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -27,14 +28,16 @@ const formSchema = z.object({
   })
 });
 
-const ProfileForm = () => {
-  const [avatarUrl, setAvatarUrl] = useState('/avatars/01.png');
+const ProfileForm = ({ user }: { user: UserProfile | null }) => {
+  const [avatarUrl, setAvatarUrl] = useState(
+    user?.avatarUrl || '/avatars/01.png'
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: 'John Doe',
-      email: 'john.doe@example.com'
+      name: user?.displayName || '',
+      email: user?.email || ''
     }
   });
 
@@ -99,7 +102,13 @@ const ProfileForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your email" type="email" {...field} />
+                <Input
+                  readOnly
+                  placeholder="Enter your email"
+                  type="email"
+                  disabled
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 This email will be used for account-related notifications.
