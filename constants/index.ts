@@ -1,4 +1,4 @@
-import { SidebarLink } from '@/types';
+import { ICourse, SidebarLink } from '@/types';
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -19,13 +19,12 @@ export const sidebarLinks: SidebarLink[] = [
   }
 ];
 
-interface Tag {
+export interface Tag {
   value: string;
   label: string;
 }
 
 export const tags: Tag[] = [
-  { value: 'all', label: 'All' },
   { value: 'nextjs', label: 'Next.js' },
   { value: 'reactjs', label: 'React.js' },
   { value: 'mongodb', label: 'MongoDB' },
@@ -99,47 +98,46 @@ export const courses = [
   }
 ];
 
-export type ICourse = {
-  id: string;
-  name: string;
-  creationDate: Date;
-  accessible: 'published' | 'hidden' | 'pending';
-  lastUpdated: Date;
-  totalEnrolled: number;
-};
-
 export const coursesDatas: ICourse[] = [
   {
-    id: '1',
-    name: 'Introduction to React',
-    creationDate: new Date('2023-01-15'),
-    accessible: 'published',
-    lastUpdated: new Date('2023-06-20'),
-    totalEnrolled: 1500
+    _id: '1',
+    title: 'Introduction to React',
+    instructor: 'John Doe',
+    enrolledStudents: 100,
+    level: 'beginner',
+    isPublished: true,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   },
   {
-    id: '2',
-    name: 'Advanced JavaScript Concepts',
-    creationDate: new Date('2023-02-28'),
-    accessible: 'hidden',
-    lastUpdated: new Date('2023-07-05'),
-    totalEnrolled: 800
+    _id: '2',
+    title: 'Advanced Node.js',
+    instructor: 'Jane Smith',
+    enrolledStudents: 75,
+    level: 'advanced',
+    isPublished: false,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   },
   {
-    id: '3',
-    name: 'CSS Mastery',
-    creationDate: new Date('2023-03-10'),
-    accessible: 'pending',
-    lastUpdated: new Date('2023-07-15'),
-    totalEnrolled: 1200
+    _id: '3',
+    title: 'Python for Data Science',
+    instructor: 'Alice Johnson',
+    enrolledStudents: 150,
+    level: 'intermediate',
+    isPublished: true,
+    thumbnail: {
+      url: 'https://placehold.co/600x400'
+    }
   }
-  // Add more mock data as needed
 ];
 
 export type IUser = {
   id: string;
   name: string;
-  accountCreation: Date;
+  createdAt: Date;
   lastUpdate: Date;
   coursesEnrolled: number;
   role: 'admin' | 'user' | 'editor';
@@ -149,7 +147,7 @@ export const users: IUser[] = [
   {
     id: '1',
     name: 'John Doe',
-    accountCreation: new Date('2023-01-15'),
+    createdAt: new Date('2023-01-15'),
     lastUpdate: new Date('2023-07-20'),
     coursesEnrolled: 3,
     role: 'user'
@@ -157,7 +155,7 @@ export const users: IUser[] = [
   {
     id: '2',
     name: 'Jane Smith',
-    accountCreation: new Date('2023-02-28'),
+    createdAt: new Date('2023-02-28'),
     lastUpdate: new Date('2023-07-25'),
     coursesEnrolled: 5,
     role: 'editor'
@@ -165,7 +163,7 @@ export const users: IUser[] = [
   {
     id: '3',
     name: 'Admin User',
-    accountCreation: new Date('2022-12-01'),
+    createdAt: new Date('2022-12-01'),
     lastUpdate: new Date('2023-07-28'),
     coursesEnrolled: 0,
     role: 'admin'

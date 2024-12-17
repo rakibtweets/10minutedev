@@ -16,7 +16,6 @@ export async function middleware(req: NextRequest) {
   const cookieStore = await cookies();
   const userCookie = cookieStore.get('user');
   const user = userCookie ? JSON.parse(userCookie.value) : null;
-  console.log('middleware user cookie', user);
 
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
