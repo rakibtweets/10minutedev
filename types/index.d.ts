@@ -36,7 +36,7 @@ export interface ICourse {
     publicId?: string;
   };
   instructor: string;
-  modules?: string[];
+  modules: string[];
   tags?: string[];
   duration?: number;
   enrolledStudents: number;
