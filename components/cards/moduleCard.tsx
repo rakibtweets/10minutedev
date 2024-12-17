@@ -18,15 +18,8 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
-
-import ModuleModal from '../modals/module-modal';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import ModuleModal from '@/components/modals/module-modal';
 import { useParams } from 'next/navigation';
 import { ParamsProps } from '@/types';
 import VideoModal from '@/components/modals/video-modal';
@@ -112,11 +105,12 @@ export function ModuleCard({
                             <Button
                               key={video._id}
                               variant="ghost"
-                              className="w-full justify-start"
+                              className="flex w-full items-center justify-start gap-1"
                               onClick={() => onVideoClick(video._id)}
                             >
                               <Video className="mr-2 size-4" />
                               <span>{video.title}</span>
+                              <span>({video.duration})</span>
                             </Button>
                             <div className="flex items-center">
                               <Dialog>
@@ -129,16 +123,12 @@ export function ModuleCard({
                                     <Edit className="size-4" />
                                   </Button>
                                 </DialogTrigger>
-                                <DialogContent>
-                                  <DialogHeader>
-                                    <DialogTitle>Edit Video</DialogTitle>
-                                  </DialogHeader>
-                                  <VideoModal
-                                    type="Edit"
-                                    module={module._id}
-                                    videoId={video.videoId}
-                                  />
-                                </DialogContent>
+
+                                <VideoModal
+                                  type="Edit"
+                                  module={module._id}
+                                  videoId={video.videoId}
+                                />
                               </Dialog>
                               <Button
                                 variant="destructive"
@@ -164,12 +154,8 @@ export function ModuleCard({
                           <Plus className="mr-2 size-4" /> Add Video
                         </Button>
                       </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Add New Video</DialogTitle>
-                        </DialogHeader>
-                        <VideoModal type="Add" />
-                      </DialogContent>
+
+                      <VideoModal type="Add" />
                     </Dialog>
                   </div>
                 </AccordionContent>
@@ -183,12 +169,7 @@ export function ModuleCard({
                   <Edit className="mr-2 size-4" /> Edit Module
                 </Button>
               </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Edit Module</DialogTitle>
-                </DialogHeader>
-                <ModuleModal type="Edit" course={params?.courseId} />
-              </DialogContent>
+              <ModuleModal type="Edit" course={params?.courseId} />
             </Dialog>
             <Button
               variant="destructive"

@@ -1,3 +1,5 @@
+'use client';
+
 import {
   DialogContent,
   DialogTitle,
@@ -13,15 +15,19 @@ interface IVideoModalProps {
 }
 
 const VideoModal = ({ type, module, videoId }: IVideoModalProps) => {
+  const descriptionId = `${type.toLowerCase()}-video-description`;
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <DialogContent
+      aria-describedby={videoId || descriptionId}
+      className="sm:max-w-[425px] "
+    >
       <DialogHeader>
         <DialogTitle>{type} Video</DialogTitle>
-        <DialogDescription>
+        <DialogDescription id={videoId || descriptionId}>
           {type === 'Add' ? 'Add new' : 'Edit'} video to module
         </DialogDescription>
       </DialogHeader>
-      <div className="custom-scrollbar max-h-[60vh] overflow-y-auto pr-6">
+      <div className="custom-scrollbar flex max-h-[60vh] grow flex-col justify-between overflow-y-auto px-4">
         <VideoForm
           type={type}
           module={type === 'Edit' ? module : ''}
