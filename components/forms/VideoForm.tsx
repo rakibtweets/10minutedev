@@ -21,13 +21,15 @@ interface VideoFormProps {
 }
 
 const VideoForm = ({ type, module, videoId }: VideoFormProps) => {
+  console.log('VideoForm  module:', module);
+
   const form = useForm<VideoFormValues>({
     resolver: zodResolver(videoSchema),
     defaultValues: {
       title: '',
       description: '',
       videoId: '',
-      module: '',
+      module,
       duration: undefined,
       order: undefined
     }
@@ -99,7 +101,13 @@ const VideoForm = ({ type, module, videoId }: VideoFormProps) => {
             <FormItem>
               <FormLabel>Module Id</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Module Id" type="text" {...field} />
+                <Input
+                  readOnly
+                  disabled
+                  placeholder="Enter Module Id"
+                  type="text"
+                  {...field}
+                />
               </FormControl>
 
               <FormMessage />

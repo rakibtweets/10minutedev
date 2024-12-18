@@ -15,46 +15,77 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ModuleFormValues, moduleSchema } from '@/lib/validation';
+import { useCreateModule, useUpdateModule } from '@/hooks/module';
+import { IModule } from '@/types';
+import { useToast } from '../ui/use-toast';
 
 interface ModuleFormProps {
   type: 'Add' | 'Edit';
   course?: string | undefined;
+  module?: IModule | undefined;
 }
 
-export default function ModuleForm({ type, course }: ModuleFormProps) {
+export default function ModuleForm({ type, course, module }: ModuleFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const form = useForm<ModuleFormValues>({
     resolver: zodResolver(moduleSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      course: '',
-      duration: undefined
+      title: module?.title || '',
+      description: module?.description || '',
+      course
     }
   });
 
-  async function onSubmit(data: ModuleFormValues) {
+  const { mutate: createModule } = useCreateModule();
+  const { mutate: updateModule } = useUpdateModule(module?._id || '');
+
+  async function onSubmit(values: ModuleFormValues) {
     setIsLoading(true);
+    console.log('module form data', values);
     try {
-      const response = await fetch('/api/modules', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        throw new Error('Failed to create module');
+      // Call API to create module
+      if (type === 'Add') {
+        createModule(values, {
+          onSuccess: () => {
+            form.reset();
+            setIsLoading(false);
+          },
+          onError: (error) => {
+            console.error('Failed to create module', error);
+            setIsLoading(false);
+          }
+        });
+      } else {
+        updateModule(values, {
+          onSuccess: () => {
+            setIsLoading(false);
+            toast({
+              title: 'Updated',
+              // @ts-ignore
+              description: 'Module updated successfully',
+              variant: 'default'
+            });
+          },
+          onError: (error: unknown) => {
+            // @ts-ignore
+            // console.error('Form submission error', error?.message);
+            toast({
+              title: 'Error',
+              // @ts-ignore
+              description: error?.message,
+              variant: 'destructive'
+            });
+            form.reset();
+            setIsLoading(false);
+          }
+        });
       }
-      form.reset();
-      // You can add a success message or redirect here
     } catch (error) {
-      console.error('Error creating module:', error);
-      // You can add an error message here
-    } finally {
-      setIsLoading(false);
+      console.error('Failed to create module', error);
     }
+    setIsLoading(false);
   }
 
   return (
@@ -93,32 +124,19 @@ export default function ModuleForm({ type, course }: ModuleFormProps) {
             <FormItem>
               <FormLabel>Course ID</FormLabel>
               <FormControl>
-                <Input placeholder="Course ID" {...field} />
+                <Input disabled readOnly placeholder="Course ID" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Duraion (minutes)</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Enter duration in minutes"
-                  {...field}
-                  onChange={(e) => field.onChange(parseInt(e.target.value))}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Creating...' : 'Create Module'}
+          {isLoading ? (
+            <>{type === 'Add' ? 'Creating Module...' : 'Updating Module...'}</>
+          ) : (
+            <>{type === 'Add' ? 'Create Module' : 'Update Module'}</>
+          )}
         </Button>
       </form>
     </Form>

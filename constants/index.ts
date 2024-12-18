@@ -1,4 +1,4 @@
-import { ICourse, SidebarLink } from '@/types';
+import { IModule, SidebarLink } from '@/types';
 
 export const sidebarLinks: SidebarLink[] = [
   {
@@ -98,42 +98,6 @@ export const courses = [
   }
 ];
 
-export const coursesDatas: ICourse[] = [
-  {
-    _id: '1',
-    title: 'Introduction to React',
-    instructor: 'John Doe',
-    enrolledStudents: 100,
-    level: 'beginner',
-    isPublished: true,
-    thumbnail: {
-      url: 'https://placehold.co/600x400'
-    }
-  },
-  {
-    _id: '2',
-    title: 'Advanced Node.js',
-    instructor: 'Jane Smith',
-    enrolledStudents: 75,
-    level: 'advanced',
-    isPublished: false,
-    thumbnail: {
-      url: 'https://placehold.co/600x400'
-    }
-  },
-  {
-    _id: '3',
-    title: 'Python for Data Science',
-    instructor: 'Alice Johnson',
-    enrolledStudents: 150,
-    level: 'intermediate',
-    isPublished: true,
-    thumbnail: {
-      url: 'https://placehold.co/600x400'
-    }
-  }
-];
-
 export type IUser = {
   id: string;
   name: string;
@@ -169,4 +133,128 @@ export const users: IUser[] = [
     role: 'admin'
   }
   // Add more mock data as needed
+];
+
+// Dummy data matching the provided schema
+export const initialModules: IModule[] = [
+  {
+    _id: '1',
+    title: 'Introduction to React',
+    description: 'Learn the basics of React and its core concepts',
+    course: '101',
+    videos: [
+      {
+        _id: 'v1',
+        title: 'What is React?',
+        description: 'An overview of React',
+        videoId: 'abc123',
+        module: '1',
+        duration: 10,
+        order: 1,
+        watchedBy: []
+      },
+      {
+        _id: 'v2',
+        title: 'Setting up a React project',
+        description: 'Step-by-step guide to set up a React project',
+        videoId: 'def456',
+        module: '1',
+        duration: 15,
+        order: 2,
+        watchedBy: []
+      },
+      {
+        _id: 'v3',
+        title: 'Components and Props',
+        description: 'Understanding React components and props',
+        videoId: 'ghi789',
+        module: '1',
+        duration: 20,
+        order: 3,
+        watchedBy: []
+      }
+    ],
+    order: 1,
+    duration: 45
+  },
+  {
+    _id: '2',
+    title: 'State and Lifecycle',
+    description: 'Understand how to manage state and component lifecycle',
+    course: '101',
+    videos: [
+      {
+        _id: 'v4',
+        title: 'Introduction to State',
+        description: 'Understanding state in React',
+        videoId: 'jkl012',
+        module: '2',
+        duration: 12,
+        order: 1,
+        watchedBy: []
+      },
+      {
+        _id: 'v5',
+        title: 'useState Hook',
+        description: 'Using the useState hook',
+        videoId: 'mno345',
+        module: '2',
+        duration: 18,
+        order: 2,
+        watchedBy: []
+      },
+      {
+        _id: 'v6',
+        title: 'useEffect Hook',
+        description: 'Understanding and using the useEffect hook',
+        videoId: 'pqr678',
+        module: '2',
+        duration: 22,
+        order: 3,
+        watchedBy: []
+      }
+    ],
+    order: 2,
+    duration: 52
+  },
+  {
+    _id: '3',
+    title: 'Advanced React Patterns',
+    description: 'Explore advanced React patterns and techniques',
+    course: '101',
+    videos: [
+      {
+        _id: 'v7',
+        title: 'Render Props',
+        description: 'Understanding and implementing render props',
+        videoId: 'stu901',
+        module: '3',
+        duration: 25,
+        order: 1,
+        watchedBy: []
+      },
+      {
+        _id: 'v8',
+        title: 'Higher-Order Components',
+        description: 'Creating and using Higher-Order Components',
+        videoId: 'vwx234',
+        module: '3',
+        duration: 30,
+        order: 2,
+        watchedBy: []
+      },
+      {
+        _id: 'v9',
+        title: 'Custom Hooks',
+        description: 'Creating and using custom hooks',
+        videoId: 'yz567',
+        module: '3',
+        duration: 28,
+        order: 3,
+        watchedBy: []
+      }
+    ],
+    order: 3,
+    duration: 83
+  }
 ];

@@ -6,13 +6,15 @@ import {
   DialogDescription
 } from '@/components/ui/dialog';
 import ModuleForm from '@/components/forms/ModuleForm';
+import { IModule } from '@/types';
 
 interface IModuleModalProps {
   type: 'Add' | 'Edit';
   course?: string | undefined;
+  module?: IModule | undefined;
 }
 
-const ModuleModal = ({ type, course }: IModuleModalProps) => {
+const ModuleModal = ({ type, course, module }: IModuleModalProps) => {
   const descriptionId = `${type.toLowerCase()}-module-description`;
   return (
     <DialogContent
@@ -26,7 +28,7 @@ const ModuleModal = ({ type, course }: IModuleModalProps) => {
         </DialogDescription>
       </DialogHeader>
       <div className="custom-scrollbar flex max-h-[60vh] grow flex-col justify-between overflow-y-auto px-4">
-        <ModuleForm type={type} course={type === 'Edit' ? course : ''} />
+        <ModuleForm type={type} course={course} module={module} />
       </div>
     </DialogContent>
   );

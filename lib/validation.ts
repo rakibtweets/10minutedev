@@ -95,34 +95,7 @@ export type UserFormValues = z.infer<typeof UserSchema>;
 export const moduleSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
-  course: z.string().min(1, 'Course ID is required'),
-  duration: z
-    .union([
-      z
-        .number()
-        .positive({ message: 'Duration must be positive' })
-        .int({ message: 'Duration must be an integer' })
-        .optional(),
-      z
-        .string()
-        .refine((value) => value.trim() !== '', {
-          message: 'Duration is required'
-        })
-        .transform((value) => {
-          const num = parseFloat(value);
-          if (isNaN(num)) throw new Error('Duration must be a valid number');
-          return num;
-        })
-        .optional()
-    ])
-    .refine(
-      (value) =>
-        typeof value === 'number' && value > 0 && Number.isInteger(value),
-      {
-        message: 'Duration must be a positive integer'
-      }
-    )
-    .optional()
+  course: z.string().min(1, 'Course ID is required')
 });
 
 export type ModuleFormValues = z.infer<typeof moduleSchema>;

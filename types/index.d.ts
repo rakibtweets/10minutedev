@@ -74,3 +74,24 @@ export interface IUser {
   accessToken?: string | null | undefined;
   accessTokenIV?: string | null | undefined;
 }
+
+export interface IVideo {
+  _id: string;
+  title: string;
+  description?: string;
+  videoId: string;
+  module: string;
+  duration: number;
+  order: number;
+  watchedBy: string[];
+}
+
+export interface IModule {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  videos: IVideo[];
+  order: number;
+  duration: number;
+}
