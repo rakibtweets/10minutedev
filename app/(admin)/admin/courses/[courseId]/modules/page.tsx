@@ -1,17 +1,11 @@
-'use client';
-
-import React from 'react';
-
-import { ModuleCard } from '@/components/cards/moduleCard';
+import React, { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import ModuleModal from '@/components/modals/module-modal';
 import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
-import { useParams } from 'next/navigation';
-import { ParamsProps } from '@/types';
+import Modules from '@/components/admin/sections/Modules';
+import { ModuleCardSkeleton } from '@/components/Skeletons/module-card-skeleton';
 
 const CourseModulesPage = () => {
-  const params = useParams<ParamsProps>();
-
   return (
     <div className="container mx-auto p-4">
       <div className="mb-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-0">
@@ -20,10 +14,12 @@ const CourseModulesPage = () => {
           <DialogTrigger asChild>
             <Button variant="default">Add Module</Button>
           </DialogTrigger>
-          <ModuleModal type="Add" course={params?.courseId} />
+          <ModuleModal type="Add" />
         </Dialog>
       </div>
-      <ModuleCard />
+      <Suspense fallback={<ModuleCardSkeleton />}>
+        <Modules />
+      </Suspense>
     </div>
   );
 };

@@ -103,6 +103,7 @@ export type ModuleFormValues = z.infer<typeof moduleSchema>;
 export const videoSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
+  course: z.string().min(1, 'Course ID is required'),
   module: z.string().min(1, 'Module ID is required'),
   videoId: z.string().min(1, 'Video ID is required'),
   duration: z

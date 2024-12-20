@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Video, Plus, Trash2, Edit } from 'lucide-react';
+import { Video, Plus, Edit } from 'lucide-react';
 import {
   Card,
   CardHeader,
@@ -20,20 +20,21 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import ModuleModal from '@/components/modals/module-modal';
-import { useParams } from 'next/navigation';
-import { IModule, ParamsProps } from '@/types';
+import { IModule } from '@/types';
 import VideoModal from '@/components/modals/video-modal';
-import { useGetModules } from '@/hooks/module';
 import DeleteModuleButton from '../buttons/DeleteModuleButton';
+import DeleteVideoButton from '../buttons/DeleteVideoButton';
 
-export function ModuleCard() {
+interface ModuleCardProps {
+  modules: IModule[] | undefined;
+  courseId?: string | string;
+}
+
+export function ModuleCard({ modules, courseId }: ModuleCardProps) {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-  const params = useParams<ParamsProps>();
   const handleAccordionChange = (value: string) => {
     setOpenAccordion(value === openAccordion ? null : value);
   };
-
-  const { data: modules } = useGetModules(params?.courseId);
 
   return (
     <div className="space-y-6">
@@ -91,15 +92,14 @@ export function ModuleCard() {
                                     </Button>
                                   </DialogTrigger>
 
-                                  <VideoModal type="Edit" module={module._id} />
+                                  <VideoModal
+                                    type="Edit"
+                                    module={module._id}
+                                    course={module.course}
+                                    video={video}
+                                  />
                                 </Dialog>
-                                <Button
-                                  variant="destructive"
-                                  title="delete"
-                                  // onClick={() => onDeleteModule(module._id)}
-                                >
-                                  <Trash2 className="size-4" />
-                                </Button>
+                                <DeleteVideoButton videoId={video._id} />
                               </div>
                             </div>
                           );
@@ -118,7 +118,11 @@ export function ModuleCard() {
                           </Button>
                         </DialogTrigger>
 
-                        <VideoModal type="Add" module={module._id} />
+                        <VideoModal
+                          type="Add"
+                          module={module._id}
+                          course={module.course}
+                        />
                       </Dialog>
                     </div>
                   </AccordionContent>
@@ -132,11 +136,7 @@ export function ModuleCard() {
                     <Edit className="mr-2 size-4" /> Edit Module
                   </Button>
                 </DialogTrigger>
-                <ModuleModal
-                  type="Edit"
-                  course={params?.courseId}
-                  module={module}
-                />
+                <ModuleModal type="Edit" module={module} />
               </Dialog>
               <DeleteModuleButton moduleId={module._id} />
             </CardFooter>

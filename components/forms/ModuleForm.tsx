@@ -16,17 +16,18 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ModuleFormValues, moduleSchema } from '@/lib/validation';
 import { useCreateModule, useUpdateModule } from '@/hooks/module';
-import { IModule } from '@/types';
+import { IModule, ParamsProps } from '@/types';
 import { useToast } from '../ui/use-toast';
+import { useParams } from 'next/navigation';
 
 interface ModuleFormProps {
   type: 'Add' | 'Edit';
-  course?: string | undefined;
   module?: IModule | undefined;
 }
 
-export default function ModuleForm({ type, course, module }: ModuleFormProps) {
+export default function ModuleForm({ type, module }: ModuleFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const params = useParams<ParamsProps>();
   const { toast } = useToast();
 
   const form = useForm<ModuleFormValues>({
@@ -34,7 +35,7 @@ export default function ModuleForm({ type, course, module }: ModuleFormProps) {
     defaultValues: {
       title: module?.title || '',
       description: module?.description || '',
-      course
+      course: params?.courseId || ''
     }
   });
 

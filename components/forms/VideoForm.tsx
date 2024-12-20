@@ -13,31 +13,57 @@ import { Textarea } from '@/components/ui/textarea';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { VideoFormValues, videoSchema } from '@/lib/validation';
+import { IVideo } from '@/types';
+import { useCreateVideo } from '@/hooks/video';
 
 interface VideoFormProps {
   type: 'Add' | 'Edit';
   module?: string | undefined;
+  course?: string | undefined;
   videoId?: string | undefined;
+  video?: IVideo | undefined;
 }
 
-const VideoForm = ({ type, module, videoId }: VideoFormProps) => {
+const VideoForm = ({
+  type,
+  module,
+  course,
+  videoId,
+  video
+}: VideoFormProps) => {
   console.log('VideoForm  module:', module);
 
   const form = useForm<VideoFormValues>({
     resolver: zodResolver(videoSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      videoId: '',
+      title: video?.title || '',
+      description: video?.description || '',
+      videoId: video?.videoId || '',
       module,
-      duration: undefined,
-      order: undefined
+      course,
+      duration: video?.duration || undefined,
+      order: video?.order || undefined
     }
   });
+
+  const { mutate: createVideo } = useCreateVideo();
 
   const onSubmit = (values: VideoFormValues) => {
     try {
       console.log(values);
+      if (type === 'Add') {
+        //! create video
+        createVideo(values, {
+          onSuccess: () => {
+            form.reset();
+          },
+          onError: (error) => {
+            console.error('Video creation error', error);
+          }
+        });
+      } else {
+        //! update
+      }
     } catch (error) {
       console.error('Form submission error', error);
     }
@@ -105,6 +131,26 @@ const VideoForm = ({ type, module, videoId }: VideoFormProps) => {
                   readOnly
                   disabled
                   placeholder="Enter Module Id"
+                  type="text"
+                  {...field}
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="course"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Course Id</FormLabel>
+              <FormControl>
+                <Input
+                  readOnly
+                  disabled
+                  placeholder="Enter Course Id"
                   type="text"
                   {...field}
                 />
