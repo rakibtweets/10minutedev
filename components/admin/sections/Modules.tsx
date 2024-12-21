@@ -22,7 +22,7 @@ const Modules = () => {
     return (
       <div className="py-4 text-center text-red-500">
         Error:{' '}
-        {error instanceof Error ? error.message : 'Failed to fetch courses'}
+        {error instanceof Error ? error.message : 'Failed to fetch modules'}
       </div>
     );
   }

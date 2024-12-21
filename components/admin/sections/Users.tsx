@@ -3,6 +3,7 @@ import { columns } from '@/components/admin/tables/user-columns';
 import { UserTable } from '../tables/user-table';
 import { useGetUsers } from '@/hooks/user';
 import { TableSkeleton } from '@/components/ui/table-skeleton';
+import NotFound from '@/components/ui/not-found';
 
 const Users = () => {
   const { data: users, isLoading, isError, error } = useGetUsers();
@@ -12,9 +13,8 @@ const Users = () => {
 
   if (isError) {
     return (
-      <div className="py-4 text-center text-red-500">
-        Error:{' '}
-        {error instanceof Error ? error.message : 'Failed to fetch courses'}
+      <div className="flex w-full justify-center">
+        <NotFound message={error.message} title="Fail to fetch users" />
       </div>
     );
   }

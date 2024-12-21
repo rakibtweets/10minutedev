@@ -145,7 +145,7 @@ export function UserTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No Users Found
                 </TableCell>
               </TableRow>
             )}

@@ -1,6 +1,7 @@
 'use client';
 import { CourseTable } from '../tables/course-table';
 import { columns } from '@/components/admin/tables/course-columns';
+import NotFound from '@/components/ui/not-found';
 import { TableSkeleton } from '@/components/ui/table-skeleton';
 import { useGetCourses } from '@/hooks/course';
 
@@ -13,9 +14,8 @@ const Courses = () => {
 
   if (isError) {
     return (
-      <div className="py-4 text-center text-red-500">
-        Error:{' '}
-        {error instanceof Error ? error.message : 'Failed to fetch courses'}
+      <div className="flex w-full justify-center">
+        <NotFound message={error.message} title="Fail to fetch courses" />
       </div>
     );
   }
