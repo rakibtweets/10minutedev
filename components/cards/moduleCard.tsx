@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Video, Plus, Edit } from 'lucide-react';
+import React, { Suspense, useState } from 'react';
+import { Plus, Edit } from 'lucide-react';
 import {
   Card,
   CardHeader,
@@ -23,7 +23,8 @@ import ModuleModal from '@/components/modals/module-modal';
 import { IModule } from '@/types';
 import VideoModal from '@/components/modals/video-modal';
 import DeleteModuleButton from '../buttons/DeleteModuleButton';
-import DeleteVideoButton from '../buttons/DeleteVideoButton';
+import Videos from '../admin/sections/Videos';
+import VideoListSkeleton from '../Skeletons/video-list-skeleton';
 
 interface ModuleCardProps {
   modules: IModule[] | undefined;
@@ -62,54 +63,9 @@ export function ModuleCard({ modules, courseId }: ModuleCardProps) {
                     Videos ({module.videos.length})
                   </AccordionTrigger>
                   <AccordionContent>
-                    {module.videos.length > 0 ? (
-                      <div className="space-y-2">
-                        {module.videos.map((video) => {
-                          return (
-                            <div
-                              key={video._id}
-                              className="flex items-center justify-between"
-                            >
-                              <Button
-                                key={video._id}
-                                variant="ghost"
-                                className="flex w-full items-center justify-start gap-1"
-                                // onClick={() => onVideoClick(video._id)}
-                              >
-                                <Video className="mr-2 size-4" />
-                                <span>{video.title}</span>
-                                <span>({video.duration})</span>
-                              </Button>
-                              <div className="flex items-center">
-                                <Dialog>
-                                  <DialogTrigger asChild>
-                                    <Button
-                                      title="Edit"
-                                      variant="outline"
-                                      className="mr-2"
-                                    >
-                                      <Edit className="size-4" />
-                                    </Button>
-                                  </DialogTrigger>
-
-                                  <VideoModal
-                                    type="Edit"
-                                    module={module._id}
-                                    course={module.course}
-                                    video={video}
-                                  />
-                                </Dialog>
-                                <DeleteVideoButton videoId={video._id} />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">
-                        No videos available
-                      </p>
-                    )}
+                    <Suspense fallback={<VideoListSkeleton />}>
+                      <Videos moduleId={module._id} />
+                    </Suspense>
                     <div className="mt-4">
                       <Dialog>
                         <DialogTrigger asChild>

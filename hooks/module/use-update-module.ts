@@ -6,8 +6,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { updateModule } from '@/lib/api/modules';
 
 export function useUpdateModule(moduleId: string) {
-  console.log('useUpdateModule  moduleId:', moduleId);
-
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (values: ModuleFormValues) => updateModule(moduleId, values),

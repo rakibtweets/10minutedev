@@ -14,7 +14,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { VideoFormValues, videoSchema } from '@/lib/validation';
 import { IVideo } from '@/types';
-import { useCreateVideo } from '@/hooks/video';
+import { useCreateVideo, useUpdateVideo } from '@/hooks/video';
+import { useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
 interface VideoFormProps {
   type: 'Add' | 'Edit';
@@ -31,7 +33,9 @@ const VideoForm = ({
   videoId,
   video
 }: VideoFormProps) => {
-  console.log('VideoForm  module:', module);
+  const { toast } = useToast();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<VideoFormValues>({
     resolver: zodResolver(videoSchema),
@@ -46,9 +50,14 @@ const VideoForm = ({
     }
   });
 
-  const { mutate: createVideo } = useCreateVideo();
+  const { mutate: createVideo } = useCreateVideo(module || '');
+  const { mutate: updateVideo } = useUpdateVideo(
+    video?._id || '',
+    video?.module || ''
+  );
 
   const onSubmit = (values: VideoFormValues) => {
+    setIsLoading(true);
     try {
       console.log(values);
       if (type === 'Add') {
@@ -56,6 +65,7 @@ const VideoForm = ({
         createVideo(values, {
           onSuccess: () => {
             form.reset();
+            setIsLoading(false);
           },
           onError: (error) => {
             console.error('Video creation error', error);
@@ -63,6 +73,29 @@ const VideoForm = ({
         });
       } else {
         //! update
+        updateVideo(values, {
+          onSuccess: () => {
+            setIsLoading(false);
+            toast({
+              title: 'Updated',
+              // @ts-ignore
+              description: 'Video updated successfully',
+              variant: 'default'
+            });
+          },
+          onError: (error: unknown) => {
+            // @ts-ignore
+            // console.error('Form submission error', error?.message);
+            toast({
+              title: 'Error',
+              // @ts-ignore
+              description: error?.message,
+              variant: 'destructive'
+            });
+            form.reset();
+            setIsLoading(false);
+          }
+        });
       }
     } catch (error) {
       console.error('Form submission error', error);
@@ -198,7 +231,13 @@ const VideoForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <>{type === 'Add' ? 'Creating Video...' : 'Updating Video...'}</>
+          ) : (
+            <>{type === 'Add' ? 'Create Video' : 'Update Video'}</>
+          )}
+        </Button>
       </form>
     </Form>
   );

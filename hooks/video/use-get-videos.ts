@@ -4,7 +4,7 @@ import { IVideo } from '@/types';
 import { getVideosByModuleId } from '@/lib/api/videos';
 
 export const useGetVideos = (moduleId: string) => {
-  return useQuery<IVideo[] | undefined>({
+  return useQuery<IVideo[]>({
     queryKey: ['videos'],
     queryFn: () => getVideosByModuleId(moduleId)
   });
