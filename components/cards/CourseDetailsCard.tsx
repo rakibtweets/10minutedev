@@ -6,11 +6,24 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { tags } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import { Video } from 'lucide-react';
 
-const CourseDetailsCard = () => {
+interface CourseDetailsCardProps {
+  title?: string;
+  description?: string;
+  instructor?: string;
+  tags?: string[];
+  videoCount?: number;
+}
+
+const CourseDetailsCard = ({
+  title,
+  description,
+  tags,
+  videoCount,
+  instructor
+}: CourseDetailsCardProps) => {
   const isSelected = false;
 
   return (
@@ -23,30 +36,28 @@ const CourseDetailsCard = () => {
           >
             <Video className="size-4" />
             <span>
-              {23} {'Chapters'}
+              {videoCount} {'videos'}
             </span>
           </Badge>
         </div>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>{title}</CardTitle>
+        <div>
+          <Badge variant="secondary" className="rounded-md">
+            {instructor}
+          </Badge>
+        </div>
       </CardHeader>
       <CardContent>
-        <CardDescription>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-          cumque quo repellat animi fugit blanditiis nesciunt, porro iusto earum
-          voluptatum ratione dolorum ad sed deserunt exercitationem numquam
-          voluptates, inventore, asperiores pariatur nisi. Labore, quis maiores
-          itaque, libero qui adipisci reiciendis at ipsa dolorem soluta odio
-          laudantium possimus beatae sit assumenda?
-        </CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardContent>
       <CardFooter className="flex flex-wrap items-center gap-2 pb-2">
-        {tags.slice(1, 4).map((tag) => (
+        {tags?.map((tag) => (
           <Badge
-            key={tag.value}
+            key={tag}
             variant="outline"
             className={`${isSelected ? 'bg-green-500/60' : ''} rounded-md text-sm`}
           >
-            {tag.label}
+            {tag}
           </Badge>
         ))}
       </CardFooter>

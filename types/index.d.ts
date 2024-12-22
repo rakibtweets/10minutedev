@@ -43,6 +43,7 @@ export interface ICourse {
   price?: number;
   level: 'beginner' | 'intermediate' | 'advanced';
   isPublished?: boolean;
+  noOfVideos: number;
 }
 
 export interface IUser {

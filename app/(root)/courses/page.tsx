@@ -1,7 +1,9 @@
-import CourseCard from '@/components/cards/courseCard';
 import { PageHeaderHeading } from '@/components/HeroSection/HeroSection';
+import Courses from '@/components/sections/Courses';
+import CourseCardSkeleton from '@/components/Skeletons/course-card-skelton';
 import { Button } from '@/components/ui/button';
-import { courses, tags } from '@/constants';
+import { tags } from '@/constants';
+import { Suspense } from 'react';
 
 const PageCourses = () => {
   const isSelected = false;
@@ -23,18 +25,16 @@ const PageCourses = () => {
       <PageHeaderHeading size="default" className=" text-center font-bold">
         Courses
       </PageHeaderHeading>
-
       <div className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
-        {courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            id={course.id}
-            imageAlt={course.imageAlt}
-            imageSrc={course.imageSrc}
-            projectName={course.projectName}
-            videoCount={course.videoCount}
-          />
-        ))}
+        <Suspense
+          fallback={Array(8)
+            .fill(0)
+            .map((_, index) => (
+              <CourseCardSkeleton key={index} />
+            ))}
+        >
+          <Courses />
+        </Suspense>
       </div>
     </>
   );
