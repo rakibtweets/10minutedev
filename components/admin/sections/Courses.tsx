@@ -20,6 +20,6 @@ const Courses = () => {
     );
   }
 
-  return <CourseTable columns={columns} data={courses} />;
+  return <CourseTable columns={columns} data={courses ?? []} />;
 };
 export default Courses;
