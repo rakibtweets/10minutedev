@@ -1,11 +1,11 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { getCourse } from '@/lib/api/courses';
+import { getVideo } from '@/lib/api/videos';
 
-export const useGetSingleModule = (videoId: string) => {
+export const useGetSingleVideo = (videoId: string) => {
   return useQuery({
     queryKey: ['video', videoId],
-    queryFn: () => getCourse(videoId),
+    queryFn: () => getVideo(videoId),
     enabled: !!videoId
   });
 };
