@@ -1,6 +1,6 @@
 import { Users, Video, Infinity, Mountain } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import CourseEnrollModal from '../modals/course-enroll-modal';
 
 interface EnrollCourseCardProps {
   courseName: string | undefined;
@@ -28,9 +28,7 @@ const EnrollCourseCard = ({
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Button className="w-full text-lg" size="lg">
-          Enroll Now
-        </Button>
+        <CourseEnrollModal />
         <div className="mt-4">
           <h3 className="mb-2 text-lg font-semibold">
             What&apos;s in this course

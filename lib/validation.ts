@@ -138,3 +138,11 @@ export const videoSchema = z.object({
 });
 
 export type VideoFormValues = z.infer<typeof videoSchema>;
+
+export const enrollSchema = z.object({
+  email: z.string().email({
+    message: 'Please enter a valid email address.'
+  })
+});
+
+export type EnrollFormValues = z.infer<typeof enrollSchema>;

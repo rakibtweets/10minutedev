@@ -1,4 +1,8 @@
-import { CourseFormValues, UpdateCourseFormValues } from '../validation';
+import {
+  CourseFormValues,
+  EnrollFormValues,
+  UpdateCourseFormValues
+} from '../validation';
 
 export const createCourse = async (values: CourseFormValues) => {
   try {
@@ -12,9 +16,7 @@ export const createCourse = async (values: CourseFormValues) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
@@ -23,7 +25,7 @@ export const createCourse = async (values: CourseFormValues) => {
     console.error('API Error:', error);
     // Throw the error with a more user-friendly message
     // @ts-ignore
-    throw new Error(`Failed to create course: ${error}`);
+    throw error;
   }
 };
 
@@ -40,16 +42,14 @@ export const getCourses = async (queryParams = {}) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch course: ${error}`);
+    throw error;
   }
 };
 
@@ -67,16 +67,14 @@ export const getCourse = async (courseId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch course: ${error}`);
+    throw error;
   }
 };
 
@@ -98,16 +96,14 @@ export const updateCourse = async (
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update course: ${error}`);
+    throw error;
   }
 };
 
@@ -129,16 +125,14 @@ export const updateCourseIsPublished = async (
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update course publication status: ${error}`);
+    throw error;
   }
 };
 
@@ -156,14 +150,41 @@ export const deleteCourse = async (courseId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     return { success: true };
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to delete course: ${error}`);
+    throw error;
+  }
+};
+
+export const enrollToCourseService = async (
+  courseId: string,
+  values: EnrollFormValues
+) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/courses/${courseId}/enroll`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.log('API Error:', error);
+    throw error;
   }
 };

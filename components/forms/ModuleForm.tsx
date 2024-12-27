@@ -52,10 +52,21 @@ export default function ModuleForm({ type, module }: ModuleFormProps) {
           onSuccess: () => {
             form.reset();
             setIsLoading(false);
+            toast({
+              variant: 'default',
+              title: 'Course created',
+              description: 'Your course has been created successfully.'
+            });
           },
-          onError: (error) => {
+          onError: (error: any) => {
             console.error('Failed to create module', error);
             setIsLoading(false);
+            toast({
+              title: `${error.name}: ${error?.HTTPStatus}`,
+              // @ts-ignore
+              description: error?.message,
+              variant: 'destructive'
+            });
           }
         });
       } else {
@@ -69,11 +80,11 @@ export default function ModuleForm({ type, module }: ModuleFormProps) {
               variant: 'default'
             });
           },
-          onError: (error: unknown) => {
+          onError: (error: any) => {
             // @ts-ignore
             // console.error('Form submission error', error?.message);
             toast({
-              title: 'Error',
+              title: `${error.name}: ${error?.HTTPStatus}`,
               // @ts-ignore
               description: error?.message,
               variant: 'destructive'

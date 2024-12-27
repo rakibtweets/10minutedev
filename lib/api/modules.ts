@@ -12,16 +12,14 @@ export const createModule = async (values: ModuleFormValues) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to create module: ${error}`);
+    throw error;
   }
 };
 
@@ -39,16 +37,14 @@ export const getModulesByCourseId = async (courseId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch modules: ${error}`);
+    throw error;
   }
 };
 
@@ -66,16 +62,14 @@ export const getModule = async (moduleId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch module: ${error}`);
+    throw error;
   }
 };
 
@@ -97,16 +91,14 @@ export const updateModule = async (
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update module: ${error}`);
+    throw error;
   }
 };
 
@@ -128,16 +120,14 @@ export const updateModuleStatus = async (
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update module status: ${error}`);
+    throw error;
   }
 };
 
@@ -155,14 +145,12 @@ export const deleteModule = async (moduleId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     return { success: true };
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to delete module: ${error}`);
+    throw error;
   }
 };

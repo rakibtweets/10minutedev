@@ -66,9 +66,19 @@ const VideoForm = ({
           onSuccess: () => {
             form.reset();
             setIsLoading(false);
+            toast({
+              variant: 'default',
+              title: 'Video uploaded',
+              description: 'Your video has been uploaded successfully.'
+            });
           },
-          onError: (error) => {
-            console.error('Video creation error', error);
+          onError: (error: any) => {
+            toast({
+              title: `${error.name}: ${error?.HTTPStatus}`,
+              // @ts-ignore
+              description: error?.message,
+              variant: 'destructive'
+            });
           }
         });
       } else {
@@ -78,17 +88,14 @@ const VideoForm = ({
             setIsLoading(false);
             toast({
               title: 'Updated',
-              // @ts-ignore
               description: 'Video updated successfully',
               variant: 'default'
             });
           },
-          onError: (error: unknown) => {
-            // @ts-ignore
+          onError: (error: any) => {
             // console.error('Form submission error', error?.message);
             toast({
-              title: 'Error',
-              // @ts-ignore
+              title: `${error.name}: ${error?.HTTPStatus}`,
               description: error?.message,
               variant: 'destructive'
             });

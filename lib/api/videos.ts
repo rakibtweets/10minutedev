@@ -12,16 +12,14 @@ export const createVideo = async (values: VideoFormValues) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to create video: ${error}`);
+    throw error;
   }
 };
 
@@ -39,16 +37,14 @@ export const getVideosByModuleId = async (moduleId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch videos: ${error}`);
+    throw error;
   }
 };
 
@@ -66,16 +62,14 @@ export const getVideo = async (videoId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch video: ${error}`);
+    throw error;
   }
 };
 
@@ -94,16 +88,14 @@ export const updateVideo = async (videoId: string, values: VideoFormValues) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update video: ${error}`);
+    throw error;
   }
 };
 
@@ -121,14 +113,12 @@ export const deleteVideo = async (videoId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     return { success: true };
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to delete video: ${error}`);
+    throw error;
   }
 };
