@@ -100,3 +100,28 @@ export const getEnrolledCoursesService = async () => {
     throw error;
   }
 };
+export const getUserStatisticsAndEnrolledCourses = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/users/dashboard`,
+      {
+        method: 'GET',
+        credentials: 'include', // Include cookies for authentication
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const enrolledCourses = await response.json();
+    return enrolledCourses;
+  } catch (error: any) {
+    console.log('API Error:', error);
+    throw error;
+  }
+};
