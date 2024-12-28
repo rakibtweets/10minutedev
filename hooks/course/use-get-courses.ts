@@ -9,7 +9,7 @@ interface CoursesQueryParams {
 
 export const useGetCourses = (queryParams: CoursesQueryParams = {}) => {
   return useQuery<ICourse[] | undefined>({
-    queryKey: ['courses'],
+    queryKey: ['courses', queryParams],
     queryFn: () => getCourses(queryParams)
   });
 };

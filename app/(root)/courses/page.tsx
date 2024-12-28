@@ -1,26 +1,13 @@
+import FilterCourseButton from '@/components/buttons/FilterCourseButton';
 import { PageHeaderHeading } from '@/components/HeroSection/HeroSection';
 import Courses from '@/components/sections/Courses';
 import CourseCardSkeleton from '@/components/Skeletons/course-card-skelton';
-import { Button } from '@/components/ui/button';
-import { tags } from '@/constants';
 import { Suspense } from 'react';
 
 const PageCourses = () => {
-  const isSelected = false;
   return (
     <>
-      <div className="flex flex-wrap items-center gap-2 pb-2">
-        {tags.map((tag) => (
-          <Button
-            key={tag.value}
-            size={'sm'}
-            variant="secondary"
-            className={`${isSelected ? 'bg-green-500/60' : ''} text-sm`}
-          >
-            {tag.label}
-          </Button>
-        ))}
-      </div>
+      <FilterCourseButton />
 
       <PageHeaderHeading size="default" className=" text-center font-bold">
         Courses

@@ -4,14 +4,18 @@ import { useGetCourses } from '@/hooks/course';
 import CourseCardSkeleton from '../Skeletons/course-card-skelton';
 import NotFound from '../ui/not-found';
 import { ICourse } from '@/types';
+import { useSearchParams } from 'next/navigation';
 
 const Courses = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get('tag') || '';
+
   const {
     data: courses,
     isError,
     error,
     isLoading
-  } = useGetCourses({ isPublished: true });
+  } = useGetCourses({ isPublished: true, tag });
 
   if (isLoading) {
     return Array(8)

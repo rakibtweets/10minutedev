@@ -8,6 +8,7 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Progress } from '../ui/progress';
+import Link from 'next/link';
 
 interface CourseCardProps {
   course: {
@@ -35,7 +36,9 @@ const DashboardCourseCard = ({ course }: CourseCardProps) => {
         </p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Continue Course</Button>
+        <Link href={`/dashboard/courses/${course._id}`}>
+          <Button className="w-full">Continue Course</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
