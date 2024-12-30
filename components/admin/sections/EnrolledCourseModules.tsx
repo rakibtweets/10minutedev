@@ -8,18 +8,18 @@ import {
 import { useGetModules } from '@/hooks/module';
 import { IVideo, ParamsProps } from '@/types';
 import { useParams } from 'next/navigation';
-import CourseContentSkeleton from '../Skeletons/course-content-skeleton';
-import NotFound from '../ui/not-found';
-import VideoList from '../admin/sections/VideoList';
+import CourseContentSkeleton from '@/components/Skeletons/course-content-skeleton';
+import NotFound from '@/components/ui/not-found';
+import VideoList from '@/components/admin/sections/VideoList';
 
-export default function CourseModules() {
+export default function EnrolledCourseModules() {
   const params = useParams<ParamsProps>();
   const {
     data: modules,
     isError,
     error,
     isLoading
-  } = useGetModules({ courseId: params.id });
+  } = useGetModules({ courseId: params.id, videoId: true });
 
   if (isLoading) {
     return <CourseContentSkeleton />;
@@ -46,7 +46,7 @@ export default function CourseModules() {
           <AccordionContent>
             <ul className="space-y-2">
               {module.videos.map((video: IVideo) => (
-                <VideoList key={video._id} video={video} />
+                <VideoList key={video._id} video={video} videoId={true} />
               ))}
             </ul>
           </AccordionContent>

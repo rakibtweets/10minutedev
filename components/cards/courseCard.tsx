@@ -21,13 +21,15 @@ const CourseCard = ({
 }: ProjectCard) => {
   return (
     <Card className="group">
-      <Image
-        src={imageSrc}
-        alt={imageAlt || projectName}
-        width={260}
-        height={160}
-        className="w-full"
-      />
+      <div className="w-full">
+        <Image
+          src={imageSrc}
+          alt={imageAlt || projectName}
+          width={260}
+          height={160}
+          className="w-full"
+        />
+      </div>
       <div className="flex flex-col px-3 py-2">
         <Link
           href={`/courses/${id}`}

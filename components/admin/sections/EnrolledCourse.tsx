@@ -1,15 +1,17 @@
 'use client';
 import Image from 'next/image';
 import CourseDetailsCard from '@/components/cards/CourseDetailsCard';
-import CourseModuleCard from '@/components/cards/CourseModuleCard';
-import EnrollCourseCard from '@/components/cards/EnrollCourseCard';
 import { useParams } from 'next/navigation';
 import { ParamsProps } from '@/types';
 import { useGetSingleCourse } from '@/hooks/course';
-import CourseDetailsSkeleton from '../Skeletons/course-details-skeleton';
-import NotFound from '../ui/not-found';
+import CourseDetailsSkeleton from '@/components/Skeletons/course-details-skeleton';
+import NotFound from '@/components/ui/not-found';
+import CourseContentSkeleton from '@/components/Skeletons/course-content-skeleton';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Suspense } from 'react';
+import EnrolledCourseModules from './EnrolledCourseModules';
 
-const CourseDetails = () => {
+const EnrollCourse = () => {
   const params = useParams<ParamsProps>();
   const {
     data: course,
@@ -53,18 +55,21 @@ const CourseDetails = () => {
       </div>
       <div className="w-full lg:col-span-4">
         <div className="flex flex-col gap-4">
-          <EnrollCourseCard
-            courseName={course?.title}
-            enrolledCount={course?.enrolledStudents}
-            price={course?.price}
-            level={course?.level}
-            videoCount={course?.noOfVideos}
-            courseValidity="Lifetime"
-          />
-          <CourseModuleCard />
+          <Card className="w-full">
+            <CardHeader className="space-y-0">
+              <CardTitle className="text-xl font-bold">
+                Course Content
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Suspense fallback={<CourseContentSkeleton />}>
+                <EnrolledCourseModules />
+              </Suspense>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
   );
 };
-export default CourseDetails;
+export default EnrollCourse;

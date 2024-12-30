@@ -23,10 +23,12 @@ export const createModule = async (values: ModuleFormValues) => {
   }
 };
 
-export const getModulesByCourseId = async (courseId: string) => {
+export const getModulesByCourseId = async (queryParams = {}) => {
   try {
+    const queryString = new URLSearchParams(queryParams).toString();
+
     const response = await fetch(
-      `http://localhost:5000/api/v1/modules?${courseId}`,
+      `http://localhost:5000/api/v1/modules${queryString ? `?${queryString}` : ''}`,
       {
         method: 'GET',
         headers: {

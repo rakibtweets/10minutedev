@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Video } from 'lucide-react';
+import ParseHTML from '../ui/parseHTML';
 
 interface CourseDetailsCardProps {
   title?: string;
@@ -27,7 +28,7 @@ const CourseDetailsCard = ({
   const isSelected = false;
 
   return (
-    <Card className="py-4">
+    <Card className="w-full py-4">
       <CardHeader className="space-y-3 py-4">
         <div>
           <Badge
@@ -48,7 +49,9 @@ const CourseDetailsCard = ({
         </div>
       </CardHeader>
       <CardContent>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>
+          <ParseHTML data={description || ''} />
+        </CardDescription>
       </CardContent>
       <CardFooter className="flex flex-wrap items-center gap-2 pb-2">
         {tags?.map((tag) => (

@@ -31,9 +31,7 @@ export const createCourse = async (values: CourseFormValues) => {
 
 export const getCourses = async (queryParams = {}) => {
   try {
-    console.log('queryParams:', queryParams);
     const queryString = new URLSearchParams(queryParams).toString();
-    console.log('queryString:', queryString);
     const url = `http://localhost:5000/api/v1/courses${queryString ? `?${queryString}` : ''}`;
     const response = await fetch(url, {
       method: 'GET',

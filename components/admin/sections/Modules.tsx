@@ -13,7 +13,7 @@ const Modules = () => {
     isError,
     error,
     isLoading
-  } = useGetModules(params?.courseId);
+  } = useGetModules({ courseId: params?.courseId });
   if (isLoading) {
     return <ModuleCardSkeleton />;
   }
