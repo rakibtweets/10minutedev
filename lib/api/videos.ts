@@ -98,6 +98,31 @@ export const updateVideo = async (videoId: string, values: VideoFormValues) => {
     throw error;
   }
 };
+export const markVideoAsWatched = async (videoId: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/videos/${videoId}/watched`,
+      {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+};
 
 export const deleteVideo = async (videoId: string) => {
   try {

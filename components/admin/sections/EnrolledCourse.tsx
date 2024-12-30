@@ -1,7 +1,6 @@
 'use client';
-import Image from 'next/image';
 import CourseDetailsCard from '@/components/cards/CourseDetailsCard';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { ParamsProps } from '@/types';
 import { useGetSingleCourse } from '@/hooks/course';
 import CourseDetailsSkeleton from '@/components/Skeletons/course-details-skeleton';
@@ -10,9 +9,14 @@ import CourseContentSkeleton from '@/components/Skeletons/course-content-skeleto
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Suspense } from 'react';
 import EnrolledCourseModules from './EnrolledCourseModules';
+import YouTubeVideoPlayer from '@/components/sections/YouTubeVideoPlayer';
+import Image from 'next/image';
 
 const EnrollCourse = () => {
   const params = useParams<ParamsProps>();
+  const searchParams = useSearchParams();
+  const videoId = searchParams.get('videoId');
+
   const {
     data: course,
     isError,
@@ -34,14 +38,19 @@ const EnrollCourse = () => {
       <div className="w-full lg:col-span-8">
         <div className="flex w-full flex-col items-center justify-center gap-4">
           <div className="w-full">
-            <Image
-              src={course?.thumbnail?.url || ''}
-              alt={'Course title'}
-              width={800}
-              height={400}
-              className="w-full rounded-lg lg:rounded-xl"
-            />
+            {!videoId ? (
+              <Image
+                src={course?.thumbnail?.url || ''}
+                alt={'Course title'}
+                width={800}
+                height={400}
+                className="w-full rounded-lg lg:rounded-xl"
+              />
+            ) : (
+              <YouTubeVideoPlayer />
+            )}
           </div>
+
           <div className="w-full">
             <CourseDetailsCard
               title={course?.title}
