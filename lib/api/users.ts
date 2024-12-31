@@ -50,6 +50,31 @@ export const getUsers = async () => {
     throw error;
   }
 };
+export const getAdminStats = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/users/admin-stats`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+};
 
 export const deleteUser = async (userId: string) => {
   try {
