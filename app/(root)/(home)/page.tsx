@@ -1,8 +1,9 @@
-import CourseCard from '@/components/cards/courseCard';
 import HeroBanner from '@/components/HeroSection/HeroBanner';
+import HomeCourses from '@/components/sections/HomeCourses';
+import CourseCardSkeleton from '@/components/Skeletons/course-card-skelton';
 import { Button } from '@/components/ui/button';
-import { courses } from '@/constants';
 import { ArrowRight } from 'lucide-react';
+import { Suspense } from 'react';
 
 export default async function Home() {
   return (
@@ -31,16 +32,15 @@ export default async function Home() {
         </div>
         {/* Courses Cards */}
         <div className="mt-8 grid gap-6 sm:grid-cols-2 md:mt-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
-          {courses.slice(0, 4).map((course) => (
-            <CourseCard
-              key={course.id}
-              id={course.id}
-              imageAlt={course.imageAlt}
-              imageSrc={course.imageSrc}
-              projectName={course.projectName}
-              videoCount={course.videoCount}
-            />
-          ))}
+          <Suspense
+            fallback={Array(4)
+              .fill(0)
+              .map((_, index) => (
+                <CourseCardSkeleton key={index} />
+              ))}
+          >
+            <HomeCourses />
+          </Suspense>
         </div>
         <div className="mt-6 flex items-center justify-center sm:hidden">
           <Button

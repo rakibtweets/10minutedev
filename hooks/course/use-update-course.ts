@@ -11,7 +11,10 @@ export function useUpdateCourse(courseId: string) {
     onSuccess: (data) => {
       // Update the cache with the new data
       queryClient.setQueryData(['course', courseId], data);
-      queryClient.invalidateQueries({ queryKey: ['courses'] });
+      queryClient.invalidateQueries({
+        queryKey: ['courses'],
+        exact: false
+      });
     }
   });
 }
