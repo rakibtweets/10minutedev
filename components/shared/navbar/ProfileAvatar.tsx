@@ -24,16 +24,15 @@ const ProfileAvatar = () => {
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="relative size-8 rounded-full outline-none hover:rounded-full focus:rounded-none focus:outline-none"
-            >
+            <Button variant="secondary" className="size-8 rounded-full">
               {isLoading ? (
                 <Skeleton className="size-8 rounded-full" />
               ) : (
                 <Avatar className="size-8 ">
                   <AvatarImage src={user.avatarUrl} />
-                  <AvatarFallback>{user.displayName}</AvatarFallback>
+                  <AvatarFallback>
+                    {user.displayName?.charAt(0) ?? ''}
+                  </AvatarFallback>
                 </Avatar>
               )}
             </Button>

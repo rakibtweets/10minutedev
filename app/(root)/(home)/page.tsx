@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 export default async function Home() {
   return (
-    <main className="max-w-6xl gap-0">
+    <main className="w-full">
       <HeroBanner />
 
       {/* Courses Section */}

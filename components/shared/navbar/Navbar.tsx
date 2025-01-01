@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import ProfileAvatar from './ProfileAvatar';
 import MobileNav from './MobileNav';
-import SearchCommandMenu from '../SearchCommandMenu';
+// import SearchCommandMenu from '../SearchCommandMenu';
 
 export function Navbar() {
   return (
@@ -21,7 +21,7 @@ export function Navbar() {
         <MainNav />
         {/* profile */}
         <div className="flex items-center justify-between gap-2">
-          <SearchCommandMenu />
+          {/* <SearchCommandMenu /> */}
           <ThemeToggle />
           <ProfileAvatar />
           <div className="lg:hidden">
