@@ -4,12 +4,21 @@ import { getCourses } from '@/lib/api/courses';
 import { ICourse } from '@/types';
 
 interface CoursesQueryParams {
-  [key: string]: any;
+  isPublished?: boolean;
+  keyword?: string;
+  tags?: string;
+  limit?: number;
 }
 
-export const useGetCourses = (queryParams: CoursesQueryParams = {}) => {
+export const useGetCourses = (
+  queryParams: CoursesQueryParams = {},
+  isSearching: boolean = false
+) => {
   return useQuery<ICourse[] | undefined>({
     queryKey: ['courses', queryParams],
-    queryFn: () => getCourses(queryParams)
+    queryFn: () => getCourses(queryParams),
+    enabled:
+      !isSearching ||
+      (queryParams.keyword !== undefined && queryParams.keyword.trim() !== '')
   });
 };
