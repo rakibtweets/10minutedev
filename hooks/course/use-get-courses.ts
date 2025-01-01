@@ -6,7 +6,7 @@ import { ICourse } from '@/types';
 interface CoursesQueryParams {
   isPublished?: boolean;
   keyword?: string;
-  tags?: string;
+  tag?: string;
   limit?: number;
 }
 
