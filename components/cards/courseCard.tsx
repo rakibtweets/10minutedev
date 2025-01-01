@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Video } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { AspectRatio } from '../ui/aspect-ratio';
 
 interface ProjectCard {
   id: string;
@@ -22,13 +23,14 @@ const CourseCard = ({
   return (
     <Card className="group">
       <div className="w-full">
-        <Image
-          src={imageSrc}
-          alt={imageAlt || projectName}
-          width={260}
-          height={160}
-          className="w-full"
-        />
+        <AspectRatio ratio={18 / 10}>
+          <Image
+            src={imageSrc}
+            alt={imageAlt || projectName}
+            fill
+            className="object-cover"
+          />
+        </AspectRatio>
       </div>
       <div className="flex flex-col px-3 py-2">
         <Link
