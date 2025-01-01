@@ -10,15 +10,9 @@ interface CoursesQueryParams {
   limit?: number;
 }
 
-export const useGetCourses = (
-  queryParams: CoursesQueryParams = {},
-  isSearching: boolean = false
-) => {
+export const useGetCourses = (queryParams: CoursesQueryParams = {}) => {
   return useQuery<ICourse[] | undefined>({
     queryKey: ['courses', queryParams],
-    queryFn: () => getCourses(queryParams),
-    enabled:
-      !isSearching ||
-      (queryParams.keyword !== undefined && queryParams.keyword.trim() !== '')
+    queryFn: () => getCourses(queryParams)
   });
 };
