@@ -1,4 +1,5 @@
 'use client';
+
 import CourseCard from '../cards/courseCard';
 import { useGetCourses } from '@/hooks/course';
 import CourseCardSkeleton from '../Skeletons/course-card-skelton';
@@ -9,7 +10,6 @@ import { useSearchParams } from 'next/navigation';
 const Courses = () => {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag') || '';
-
   const {
     data: courses,
     isError,

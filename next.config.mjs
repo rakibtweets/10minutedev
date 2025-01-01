@@ -18,6 +18,7 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true
   }
+  // missingSuspenseWithCSRBailout: true
 };
 
 export default nextConfig;
