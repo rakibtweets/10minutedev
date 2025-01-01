@@ -1,6 +1,6 @@
 import FilterCourseButton from '@/components/buttons/FilterCourseButton';
 import { PageHeaderHeading } from '@/components/HeroSection/HeroSection';
-import CoursesWrapper from '@/components/sections/CoursesWrapper';
+import Courses from '@/components/sections/Courses';
 import CourseCardSkeleton from '@/components/Skeletons/course-card-skelton';
 import { Suspense } from 'react';
 
@@ -20,7 +20,7 @@ const PageCourses = () => {
               <CourseCardSkeleton key={index} />
             ))}
         >
-          <CoursesWrapper />
+          <Courses />
         </Suspense>
       </div>
     </>

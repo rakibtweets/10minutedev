@@ -5,12 +5,11 @@ import { useGetCourses } from '@/hooks/course';
 import CourseCardSkeleton from '../Skeletons/course-card-skelton';
 import NotFound from '../ui/not-found';
 import { ICourse } from '@/types';
+import { useSearchParams } from 'next/navigation';
 
-interface CoursesProps {
-  tag: string;
-}
-
-const Courses = ({ tag }: CoursesProps) => {
+const Courses = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get('tag') || '';
   const {
     data: courses,
     isError,
