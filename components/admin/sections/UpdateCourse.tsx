@@ -1,6 +1,7 @@
 'use client';
 import CourseForm from '@/components/forms/CourseForm';
 import SkeletonForm from '@/components/Skeletons/form-skeleton';
+import NotFound from '@/components/ui/not-found';
 import { useGetSingleCourse } from '@/hooks/course';
 import { ParamsProps } from '@/types';
 import { useParams } from 'next/navigation';
@@ -19,9 +20,8 @@ const UpdateCourse = () => {
   }
   if (isError) {
     return (
-      <div className="py-4 text-center text-red-500">
-        Error:{' '}
-        {error instanceof Error ? error.message : 'Failed to fetch course'}
+      <div className="flex w-full justify-center">
+        <NotFound message={error.message} title="Fail to fetch course" />
       </div>
     );
   }

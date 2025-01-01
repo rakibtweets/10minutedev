@@ -36,13 +36,14 @@ export interface ICourse {
     publicId?: string;
   };
   instructor: string;
-  modules?: string[];
+  modules: string[];
   tags?: string[];
   duration?: number;
   enrolledStudents: number;
   price?: number;
   level: 'beginner' | 'intermediate' | 'advanced';
   isPublished?: boolean;
+  noOfVideos: number;
 }
 
 export interface IUser {
@@ -73,4 +74,25 @@ export interface IUser {
   isDeactivated?: boolean;
   accessToken?: string | null | undefined;
   accessTokenIV?: string | null | undefined;
+}
+
+export interface IVideo {
+  _id: string;
+  title: string;
+  description?: string;
+  videoId: string;
+  module: string;
+  duration: number;
+  order: number;
+  watchedBy: string[];
+}
+
+export interface IModule {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  videos: IVideo[];
+  order: number;
+  duration: number;
 }

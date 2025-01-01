@@ -64,7 +64,6 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
         url: course?.thumbnail?.url || '',
         publicId: course?.thumbnail?.publicId || ''
       },
-      duration: course?.duration || undefined,
       level: course?.level || '',
       tags: course?.tags || []
     }
@@ -113,11 +112,11 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
           setIsLoading(false);
           router.push('/admin/courses');
         },
-        onError: (error: unknown) => {
+        onError: (error: any) => {
           // @ts-ignore
           // console.error('Form submission error', error?.message);
           toast({
-            title: 'Error',
+            title: `${error.name}: ${error?.HTTPStatus}`,
             // @ts-ignore
             description: error?.message,
             variant: 'destructive'
@@ -140,11 +139,11 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
           });
           router.push('/admin/courses');
         },
-        onError: (error: unknown) => {
+        onError: (error: any) => {
           // @ts-ignore
           // console.error('Form submission error', error?.message);
           toast({
-            title: 'Error',
+            title: `${error.name}: ${error?.HTTPStatus}`,
             // @ts-ignore
             description: error?.message,
             variant: 'destructive'
@@ -236,25 +235,6 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
                   }}
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Duration (hours)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter course duration"
-                  type="number"
-                  {...field}
-                />
-              </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

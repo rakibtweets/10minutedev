@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+import './prism.css';
 import React from 'react';
 import NextTopLoader from 'nextjs-toploader';
 import { BreakPointIndicator } from '@/components/shared/BreakPointIndicator';
@@ -31,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <NextTopLoader showSpinner={false} />
         <Providers>{children}</Providers>

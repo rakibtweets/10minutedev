@@ -1,39 +1,18 @@
 import CourseCard from '@/components/cards/courseCard';
-import CourseDetailsCard from '@/components/cards/CourseDetailsCard';
-import CourseModuleCard from '@/components/cards/CourseModuleCard';
-import EnrollCourseCard from '@/components/cards/EnrollCourseCard';
+import CourseDetails from '@/components/sections/course-details';
+import CourseDetailsSkeleton from '@/components/Skeletons/course-details-skeleton';
 import { Button } from '@/components/ui/button';
 import { courses } from '@/constants';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { Suspense } from 'react';
 
 const CourseDetailsPage = () => {
   return (
     <section className="">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <div className="w-full lg:col-span-8">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div>
-              <Image
-                src={'https://placehold.co/600x400'}
-                alt={'Course title'}
-                width={800}
-                height={400}
-                className="rounded-lg lg:rounded-xl"
-              />
-            </div>
-            <div>
-              <CourseDetailsCard />
-            </div>
-          </div>
-        </div>
-        <div className="w-full lg:col-span-4">
-          <div className="flex flex-col gap-4">
-            <EnrollCourseCard />
-            <CourseModuleCard />
-          </div>
-        </div>
-      </div>
+      <Suspense fallback={<CourseDetailsSkeleton />}>
+        <CourseDetails />
+      </Suspense>
+
       {/* Related Courses */}
       <section className="mt-16">
         <div className="flex items-center justify-center gap-4 space-y-9">

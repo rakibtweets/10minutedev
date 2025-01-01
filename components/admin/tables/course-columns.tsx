@@ -75,6 +75,24 @@ export const columns: ColumnDef<ICourse>[] = [
     }
   },
   {
+    accessorKey: 'modules',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          No of Modules
+          <ArrowUpDown className="ml-2 size-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const modules = row.getValue('modules') as string[];
+      return modules.length;
+    }
+  },
+  {
     accessorKey: 'level',
     header: 'Level'
   },
@@ -116,6 +134,11 @@ export const columns: ColumnDef<ICourse>[] = [
             <DropdownMenuItem className="cursor-pointer">
               <Link href={`/admin/courses/edit/${course._id}`}>
                 Edit course
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <Link href={`/admin/courses/${course._id}/modules`}>
+                Course Modules
               </Link>
             </DropdownMenuItem>
             <PublishCourseButton course={course} />

@@ -1,7 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 
-const protectedRoutes = ['/dashboard', '/courses', '/profile', '/enrollment'];
+const protectedRoutes = [
+  '/dashboard',
+  '/dashboard/courses/:id',
+  '/profile',
+  '/enrollment'
+];
 
 const adminRoutes = [
   '/admin',

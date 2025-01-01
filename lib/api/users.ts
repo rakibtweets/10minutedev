@@ -18,16 +18,14 @@ export const updateUserById = async (
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to update user: ${error}`);
+    throw error;
   }
 };
 
@@ -42,16 +40,39 @@ export const getUsers = async () => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     const result = await response.json();
     return result;
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to fetch users: ${error}`);
+    throw error;
+  }
+};
+export const getAdminStats = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/users/admin-stats`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
   }
 };
 
@@ -69,14 +90,63 @@ export const deleteUser = async (userId: string) => {
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessages = errorResponse.errors || [];
-      const errorMessage = errorMessages.join(', ') || 'Unknown error occurred';
-      throw new Error(`${response.status} - ${errorMessage}`);
+      throw errorResponse;
     }
 
     return { success: true };
   } catch (error) {
     console.error('API Error:', error);
-    throw new Error(`Failed to delete user: ${error}`);
+    throw error;
+  }
+};
+
+export const getEnrolledCoursesService = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/users/enrolled-courses`,
+      {
+        method: 'GET',
+        credentials: 'include', // Include cookies for authentication
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const enrolledCourses = await response.json();
+    return enrolledCourses;
+  } catch (error: any) {
+    console.log('API Error:', error);
+    throw error;
+  }
+};
+export const getUserStatisticsAndEnrolledCourses = async () => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/users/dashboard`,
+      {
+        method: 'GET',
+        credentials: 'include', // Include cookies for authentication
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw errorResponse;
+    }
+
+    const enrolledCourses = await response.json();
+    return enrolledCourses;
+  } catch (error: any) {
+    console.log('API Error:', error);
+    throw error;
   }
 };
