@@ -70,5 +70,10 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
+  "overrides": {
+    "next-contentlayer": {
+      "next": "$next"
+    }
+  },
   "proxy": "http://localhost:5000"
 }
