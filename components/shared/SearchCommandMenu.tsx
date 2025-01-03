@@ -2,89 +2,41 @@
 import { Button } from '@/components/ui/button';
 import {
   CommandDialog,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList
 } from '@/components/ui/command';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from '@/hooks/useDebounce';
-import { cn, isMacOs } from '@/lib/utils';
-import { CircleIcon, Search } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import React, { useTransition, useState, useEffect } from 'react';
-
-const demoData = [
-  {
-    category: 'Electronics',
-    products: [
-      { id: '1', name: 'Smartphone' },
-      { id: '2', name: 'Laptop' },
-      { id: '3', name: 'Headphones' }
-    ]
-  },
-  {
-    category: 'Home Appliances',
-    products: [
-      { id: '4', name: 'Refrigerator' },
-      { id: '5', name: 'Microwave Oven' },
-      { id: '6', name: 'Dishwasher' }
-    ]
-  },
-  {
-    category: 'Furniture',
-    products: [
-      { id: '7', name: 'Sofa' },
-      { id: '8', name: 'Dining Table' },
-      { id: '9', name: 'Bed' }
-    ]
-  }
-];
-
-const productCategories = [
-  {
-    title: 'Electronics',
-    icon: ''
-  },
-  {
-    title: 'Home Appliances',
-    icon: ''
-  },
-  {
-    title: 'Furniture',
-    icon: ''
-  }
-];
+import { formUrlQuery, isMacOs, removeKeysFromQuery } from '@/lib/utils';
+import { Search } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import SearchCourseList from '../sections/SearchCourseList';
 
 const SearchCommandMenu = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 300);
-  const [isPending, startTransition] = useTransition();
-  const [data, setData] = useState<
-    { category: string; products: { id: string; name: string }[] }[]
-  >([]);
+  const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
-    if (debouncedQuery.length <= 0) {
-      setData([]);
-      return;
+    if (debouncedQuery) {
+      const newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        key: 'keyword',
+        value: debouncedQuery
+      });
+      router.push(newUrl, { scroll: false });
+    } else {
+      const newUrl = removeKeysFromQuery({
+        params: searchParams.toString(),
+        keysToRemove: ['keyword']
+      });
+
+      router.push(newUrl, { scroll: false });
     }
-
-    async function fetchData() {
-      try {
-        setData(demoData);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    startTransition(fetchData);
-
-    return () => setData([]);
-  }, [debouncedQuery]);
+  }, [debouncedQuery, router, searchParams]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -101,6 +53,21 @@ const SearchCommandMenu = () => {
     setOpen(false);
     callback();
   }, []);
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    if (open) {
+      // Call the API when the command dialog is opened
+    } else {
+      setQuery('');
+      const newUrl = removeKeysFromQuery({
+        params: searchParams.toString(),
+        keysToRemove: ['keyword']
+      });
+
+      router.push(newUrl, { scroll: false });
+    }
+  };
   return (
     <>
       <Button
@@ -121,65 +88,24 @@ const SearchCommandMenu = () => {
           K
         </kbd>
       </Button>
-      <CommandDialog
-        open={open}
-        onOpenChange={(open) => {
-          setOpen(open);
-          if (!open) {
-            setQuery('');
-          }
-        }}
-      >
+      <CommandDialog open={open} onOpenChange={handleOpenChange}>
         <CommandInput
           value={query}
           onValueChange={setQuery}
           placeholder="Type a command or search..."
         />
         <CommandList>
-          <CommandEmpty
-            className={cn(isPending ? 'hidden' : 'py-6 text-center text-sm')}
+          <Suspense
+            fallback={
+              <div className="space-y-1 overflow-hidden px-1 py-2">
+                <Skeleton className="h-12 rounded-sm" />
+                <Skeleton className="h-12 rounded-sm" />
+                <Skeleton className="h-12 rounded-sm" />
+              </div>
+            }
           >
-            No results found.
-          </CommandEmpty>
-          {isPending ? (
-            <div className="space-y-1 overflow-hidden px-1 py-2">
-              <Skeleton className="h-4 w-10 rounded" />
-              <Skeleton className="h-8 rounded-sm" />
-              <Skeleton className="h-8 rounded-sm" />
-            </div>
-          ) : (
-            data?.map((group) => (
-              <CommandGroup
-                key={group?.category}
-                className="capitalize"
-                heading={group?.category}
-              >
-                {group?.products?.map((item) => {
-                  const CategoryIcon =
-                    productCategories.find(
-                      (category) => category.title === group?.category
-                    )?.icon ?? CircleIcon;
-
-                  return (
-                    <CommandItem
-                      key={item.id}
-                      className="h-9"
-                      value={item.name}
-                      onSelect={() =>
-                        handleSelect(() => router.push(`/product/${item.id}`))
-                      }
-                    >
-                      <CategoryIcon
-                        className="mr-2.5 size-3 text-muted-foreground"
-                        aria-hidden="true"
-                      />
-                      <span className="truncate">{item.name}</span>
-                    </CommandItem>
-                  );
-                })}
-              </CommandGroup>
-            ))
-          )}
+            <SearchCourseList handleSelect={handleSelect} />
+          </Suspense>
         </CommandList>
       </CommandDialog>
     </>
