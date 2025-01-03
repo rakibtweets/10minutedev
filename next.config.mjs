@@ -1,3 +1,5 @@
+import { withContentlayer } from 'next-contentlayer';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // image support for next js
@@ -16,9 +18,14 @@ const nextConfig = {
         pathname: '/**'
       }
     ],
-    dangerouslyAllowSVG: true
-  }
-  // missingSuspenseWithCSRBailout: true
+    dangerouslyAllowSVG: true,
+    unoptimized: true
+  },
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  // missingSuspenseWithCSRBailout: true,
+  // Already doing linting and typechecking as separate tasks in CI
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true }
 };
 
-export default nextConfig;
+export default withContentlayer(nextConfig);
