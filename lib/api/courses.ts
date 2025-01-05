@@ -11,6 +11,7 @@ export const createCourse = async (values: CourseFormValues) => {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify(values)
     });
 
@@ -90,6 +91,7 @@ export const updateCourse = async (
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(values)
       }
     );
@@ -119,6 +121,7 @@ export const updateCourseIsPublished = async (
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ isPublished })
       }
     );
@@ -144,7 +147,8 @@ export const deleteCourse = async (courseId: string) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include'
       }
     );
 
