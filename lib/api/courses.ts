@@ -1,3 +1,4 @@
+import api from '@/utils/api';
 import {
   CourseFormValues,
   EnrollFormValues,
@@ -5,190 +6,70 @@ import {
 } from '../validation';
 
 export const createCourse = async (values: CourseFormValues) => {
-  try {
-    const response = await fetch(`http://localhost:5000/api/v1/courses`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(values)
-    });
+  const response = await api.post(`/courses`, values, {
+    withCredentials: true
+  });
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('API Error:', error);
-    // Throw the error with a more user-friendly message
-    // @ts-ignore
-    throw error;
-  }
+  return response.data;
 };
 
 export const getCourses = async (queryParams = {}) => {
-  try {
-    const queryString = new URLSearchParams(queryParams).toString();
-    const url = `http://localhost:5000/api/v1/courses${queryString ? `?${queryString}` : ''}`;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  const queryString = new URLSearchParams(queryParams).toString();
+  const url = `/courses${queryString ? `?${queryString}` : ''}`;
+  const response = await api.get(url);
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  return response.data;
 };
 
 export const getCourse = async (courseId: string) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/courses/${courseId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+  const response = await api.get(`/courses/${courseId}`);
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  return response.data;
 };
 
 export const updateCourse = async (
   courseId: string,
   values: UpdateCourseFormValues
 ) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/courses/${courseId}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(values)
-      }
-    );
+  const response = await api.put(`/courses/${courseId}`, values, {
+    withCredentials: true
+  });
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  return response.data;
 };
 
 export const updateCourseIsPublished = async (
   courseId: string,
   isPublished: boolean
 ) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/courses/${courseId}/publish`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({ isPublished })
-      }
-    );
-
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
+  const response = await api.put(
+    `/courses/${courseId}/publish`,
+    { isPublished },
+    {
+      withCredentials: true
     }
+  );
 
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  return response.data;
 };
 
 export const deleteCourse = async (courseId: string) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/courses/${courseId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      }
-    );
+  const response = await api.delete(
+    `/courses/${courseId}`,
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
+    {
+      withCredentials: true
     }
-
-    return { success: true };
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  );
+  return response.data;
 };
 
 export const enrollToCourseService = async (
   courseId: string,
   values: EnrollFormValues
 ) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/courses/${courseId}/enroll`,
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      }
-    );
-
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw errorResponse;
-    }
-
-    return { success: true };
-  } catch (error: any) {
-    console.log('API Error:', error);
-    throw error;
-  }
+  const response = await api.post(`/courses/${courseId}/enroll`, values, {
+    withCredentials: true
+  });
+  return response.data;
 };
