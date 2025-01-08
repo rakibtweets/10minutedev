@@ -9,6 +9,7 @@ import { CodeBlock } from '@/components/mdx/code-block';
 import { MdxCard } from '@/components/mdx/mdx-card';
 import { MdxImage } from '@/components/mdx/mdx-image';
 import { LinkBadge } from './link-badge';
+import React from 'react';
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -145,7 +146,7 @@ const components = {
   AlertDescription,
   AspectRatio,
   Card: MdxCard,
-  LinkBadge: LinkBadge,
+  LinkBadge,
   ScrollArea,
   Callout
 };

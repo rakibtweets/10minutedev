@@ -1,6 +1,6 @@
-import { IModule, SidebarLink } from '@/types';
+import { IModule, NavLinks } from '@/types';
 
-export const sidebarLinks: SidebarLink[] = [
+export const navLinks: NavLinks[] = [
   {
     route: '/',
     label: 'Home'
@@ -12,10 +12,6 @@ export const sidebarLinks: SidebarLink[] = [
   {
     route: '/about',
     label: 'About'
-  },
-  {
-    route: '/request-course',
-    label: 'Request Course'
   }
 ];
 

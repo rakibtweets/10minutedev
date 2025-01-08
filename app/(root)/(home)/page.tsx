@@ -1,4 +1,5 @@
 import HeroBanner from '@/components/HeroSection/HeroBanner';
+import { Features } from '@/components/sections/Features';
 import HomeCourses from '@/components/sections/HomeCourses';
 import CourseCardSkeleton from '@/components/Skeletons/course-card-skelton';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,8 @@ export default async function Home() {
   return (
     <main className="w-full">
       <HeroBanner />
+
+      <Features />
 
       {/* Courses Section */}
       <section className="mt-5">

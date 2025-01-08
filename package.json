@@ -37,7 +37,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.17.3",
-    "html-react-parser": "^5.2.2",
+    "html-react-parser": "^4.2.2",
     "lucide-react": "^0.391.0",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.1",

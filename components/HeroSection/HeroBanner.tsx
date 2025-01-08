@@ -10,8 +10,10 @@ import {
   PageHeaderDescription,
   PageActions
 } from './HeroSection';
+import { getGithubStars } from '@/lib/api/github';
 
-const HeroBanner = () => {
+const HeroBanner = async () => {
+  const github = await getGithubStars();
   return (
     <PageHeader
       as="section"
@@ -19,7 +21,7 @@ const HeroBanner = () => {
       withPadding
     >
       <Link
-        href={'https://github.com'}
+        href={github?.repoUrl || 'https://github.com/rakibtweets/10minutedev'}
         target="_blank"
         rel="noreferrer"
         className="animate-fade-up"
@@ -31,7 +33,7 @@ const HeroBanner = () => {
           className="rounded-full px-3.5 py-1.5"
         >
           <StarIcon className="mr-2 size-4" aria-hidden="true" />
-          {123} stars on GitHub
+          {github?.starCount} stars on GitHub
         </Badge>
       </Link>
       <PageHeaderHeading

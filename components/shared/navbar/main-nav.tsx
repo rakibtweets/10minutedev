@@ -12,33 +12,22 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
+import { navLinks } from '@/constants';
 
 const MainNav = () => {
   return (
     <div className="max-lg:hidden">
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/courses" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Courses
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/about" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                About
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/request-course" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Request Course
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          {navLinks.map((link) => (
+            <NavigationMenuItem key={link.route}>
+              <Link href={link.route} legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {link.label}
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
