@@ -6,18 +6,17 @@ import {
   SheetContent,
   SheetTrigger
 } from '@/components/ui/sheet';
-import { sidebarLinks } from '@/constants';
+import { navLinks } from '@/constants';
 import { AlignJustifyIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NavContent = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <section className="flex h-full flex-col gap-1 pt-16">
-      {sidebarLinks?.map((item) => {
+      {navLinks?.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
           pathname === item.route;

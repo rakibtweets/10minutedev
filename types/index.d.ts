@@ -1,4 +1,4 @@
-export interface SidebarLink {
+export interface NavLinks {
   route: string;
   label: string;
 }

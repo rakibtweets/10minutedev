@@ -26,7 +26,7 @@ interface PageProps {
 function getPageFromParams(params: PageProps['params']) {
   const slug = params?.slug?.join('/') ?? '';
   const page = allPages.find(
-    //@ts-ignore
+    // @ts-ignore
     (page) => page.slugAsParams === slug
   );
 
@@ -79,7 +79,7 @@ function getPageFromParams(params: PageProps['params']) {
 
 export function generateStaticParams(): PageProps['params'][] {
   return allPages.map((page) => ({
-    //@ts-ignore
+    // @ts-ignore
     slug: page?.slugAsParams?.split('/')
   }));
 }

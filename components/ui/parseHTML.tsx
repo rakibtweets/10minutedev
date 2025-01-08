@@ -13,7 +13,6 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-aspnet';
 import 'prismjs/components/prism-sass';
 import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-css';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-solidity';
 import 'prismjs/components/prism-json';
@@ -28,7 +27,6 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-mongodb';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-
 interface Props {
   data: string;
 }
@@ -37,8 +35,7 @@ const ParseHTML = ({ data }: Props) => {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
-
-  return <div className={'markdown w-full min-w-full'}>{parse(data)}</div>;
+  return <div className={'markdown  min-w-full'}>{parse(data.toString())}</div>;
 };
 
 export default ParseHTML;

@@ -19,7 +19,7 @@ const VideoList = ({
 }: VideoListProps) => {
   const { user } = useAuth();
 
-  const isWatched = user ? video.watchedBy.includes(user._id) : false;
+  const isWatched = user ? video?.watchedBy?.includes(user._id) : false;
 
   return (
     <>

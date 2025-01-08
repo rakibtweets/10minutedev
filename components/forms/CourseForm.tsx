@@ -103,6 +103,7 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
   const { mutate: updateCourse } = useUpdateCourse(course?._id as string);
 
   const onSubmit = async (values: CourseFormValues) => {
+    console.log('Creating course', values);
     setIsLoading(true);
     if (type === 'create') {
       createCourse(values, {
@@ -114,7 +115,6 @@ const CourseForm = ({ courseId, course, type }: CourseFormProps) => {
         },
         onError: (error: any) => {
           // @ts-ignore
-          // console.error('Form submission error', error?.message);
           toast({
             title: `${error.name}: ${error?.HTTPStatus}`,
             // @ts-ignore

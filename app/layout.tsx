@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import './prism.css';
+import '../styles/prism.css';
 import React from 'react';
 import NextTopLoader from 'nextjs-toploader';
 import { BreakPointIndicator } from '@/components/shared/BreakPointIndicator';
