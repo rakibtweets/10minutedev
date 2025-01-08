@@ -1,33 +1,40 @@
 import 'server-only';
-import axios from 'axios';
 
-interface GithubRepoInfo {
-  starCount: number;
-  repoUrl: string;
-}
+import { unstable_cache as cache } from 'next/cache';
 
-export async function getGithubStars(): Promise<GithubRepoInfo | null> {
-  async function fetchStars() {
-    'use cache';
-    try {
-      const response = await axios.get(
+export async function getGithubStars() {
+  return await cache(
+    async () => {
+      const response = await fetch(
         'https://api.github.com/repos/rakibtweets/10minutedev',
         {
           headers: {
             Accept: 'application/vnd.github+json'
+          },
+          next: {
+            revalidate: 60
           }
         }
       );
 
-      return {
-        starCount: response.data.stargazers_count,
-        repoUrl: response.data.html_url
-      };
-    } catch (error) {
-      // console.error('Error fetching GitHub stars:', error);
-      return null;
-    }
-  }
+      if (!response.ok) {
+        return null;
+      }
 
-  return fetchStars();
+      const data = (await response.json()) as {
+        stargazers_count: number;
+        html_url: string;
+      };
+
+      return {
+        starCount: data.stargazers_count,
+        repoUrl: data.html_url
+      };
+    },
+    ['github-stars'],
+    {
+      revalidate: 900,
+      tags: ['github-stars']
+    }
+  )();
 }
