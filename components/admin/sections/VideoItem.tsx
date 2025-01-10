@@ -1,9 +1,10 @@
 'use client';
 import DeleteVideoButton from '@/components/buttons/DeleteVideoButton';
 import VideoModal from '@/components/modals/video-modal';
+import { VideoPopupModal } from '@/components/modals/video-popup';
 import { Button } from '@/components/ui/button';
 import { IVideo } from '@/types';
-import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Video, Edit } from 'lucide-react';
 
 interface VideoItemProps {
@@ -23,15 +24,23 @@ const VideoItem = ({ module, videos, course }: VideoItemProps) => {
                 key={video._id}
                 className="flex items-center justify-between"
               >
-                <Button
-                  key={video._id}
-                  variant="ghost"
-                  className="flex w-full items-center justify-start gap-1"
-                >
-                  <Video className="mr-2 size-4" />
-                  <span>{video.title}</span>
-                  <span>({video.duration})</span>
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      key={video._id}
+                      variant="ghost"
+                      className="flex w-full items-center justify-start gap-1"
+                    >
+                      <Video className="mr-2 size-4" />
+                      <span>{video.title}</span>
+                      <span>({video.duration})</span>
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="aspect-video w-full max-w-[600px] p-0">
+                    <VideoPopupModal videoId={video?.videoId} />
+                  </DialogContent>
+                </Dialog>
+
                 <div className="flex items-center">
                   <Dialog>
                     <DialogTrigger asChild>
